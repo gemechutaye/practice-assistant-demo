@@ -1,0 +1,38 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "role": "doctor",
+      "tools": [
+        "get_schedule",
+        "get_preparation_status",
+        "get_open_tasks",
+        "search_sources",
+        "get_preferences",
+        "ask_assistant",
+        "inspect_run",
+        "approve_plan",
+        "submit_demo_handoff"
+      ],
+      "preparation_denied": false,
+      "invalid_arguments_denied": true,
+      "deadline_minutes": 45
+    },
+    {
+      "role": "editor",
+      "tools": [
+        "get_schedule",
+        "get_preparation_status",
+        "get_open_tasks",
+        "search_sources",
+        "get_preferences",
+        "ask_assistant",
+        "inspect_run",
+        "approve_plan",
+        "submit_demo_handoff"
+      ],
+      "preparation_denied": true,
+      "invalid_arguments_denied": true
+    }
+  ]
+}

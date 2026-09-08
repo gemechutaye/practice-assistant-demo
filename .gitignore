@@ -1,0 +1,17 @@
+.env
+.env.*
+!.env.example
+.venv/
+node_modules/
+.next/
+.vercel/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+*.pyc
+artifacts/private/
+.DS_Store
+
+output/
+.playwright-cli/
+*.tsbuildinfo

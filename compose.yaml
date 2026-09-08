@@ -1,0 +1,69 @@
+name: practice-assistant
+
+services:
+  database:
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_DB: practice_assistant
+      POSTGRES_USER: practice
+      # This disposable development database is bound only to the local machine.
+      POSTGRES_PASSWORD: practice-local-only
+    ports:
+      - "127.0.0.1:55432:5432"
+    volumes:
+      - practice-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U practice -d practice_assistant"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  migrate:
+    build:
+      context: .
+      dockerfile: infra/Dockerfile
+    command: ["migrate"]
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      DATABASE_URL: postgresql://practice:practice-local-only@database:5432/practice_assistant
+    depends_on:
+      database:
+        condition: service_healthy
+
+  api:
+    build:
+      context: .
+      dockerfile: infra/Dockerfile
+    command: ["api"]
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      DATABASE_URL: postgresql://practice:practice-local-only@database:5432/practice_assistant
+      ENVIRONMENT: local
+      PORT: "10000"
+    ports:
+      - "127.0.0.1:8100:10000"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+  worker:
+    build:
+      context: .
+      dockerfile: infra/Dockerfile
+    command: ["worker"]
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      DATABASE_URL: postgresql://practice:practice-local-only@database:5432/practice_assistant
+      ENVIRONMENT: local
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+volumes:
+  practice-data:

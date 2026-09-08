@@ -1,0 +1,16 @@
+.git
+.venv
+node_modules
+**/node_modules
+**/.next
+**/.env
+**/.env.*
+!**/.env.example
+**/__pycache__
+**/.pytest_cache
+**/.ruff_cache
+work
+outputs
+*.mp4
+*.webm
+*.zip
