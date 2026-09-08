@@ -39,10 +39,10 @@ For local development only, `LOCAL_DEMO_AUTH=true` under `next dev` exposes an e
 - Content: scripts, captions, assigned review, and cited source pages.
 - Team: engineering progress and outstanding decisions.
 - Memory: persistent preferences, explicit edits, and deletion.
-- Sources: attributed public pages and clearly identified demonstration notes.
+- Sources: attributed public pages, clearly identified demonstration notes, and saved live availability checks.
 - Reports: counts computed from current records, task distribution, and saved report data.
-- Assistant: resumable request history, live progress, exact proposed changes, approval, cancellation, error recovery, and a run inspector.
+- Assistant: resumable request history, live progress, exact proposed changes, approval, cancellation, error recovery, and a run inspector with private report exports. Export links expire after ten minutes.
 
-Voice requests are recorded only after the user presses Speak. Browser recordings are converted to mono PCM WAV before transcription. The transcript is placed in the composer for review before sending. Reading an answer aloud uses the backend speech endpoint.
+Voice requests are recorded only after the user presses Speak. Browser recordings are converted to 16 kHz mono PCM WAV before transcription; recordings stop at sixty seconds. The transcript is placed in the composer for review before sending. Reading an answer aloud uses the backend speech endpoint.
 
 Realtime workspace revision notifications trigger an authorized snapshot fetch. Private office tables are never queried directly from the browser. Periodic refresh and run polling keep the application usable if a Realtime connection is interrupted.

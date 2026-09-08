@@ -17,6 +17,7 @@ from opentelemetry.sdk.trace.export import (
 _spans = deque(maxlen=200)
 _lock = threading.Lock()
 _configured = False
+_configure_lock = threading.Lock()
 
 
 class RecentSpanExporter(SpanExporter):
@@ -36,16 +37,17 @@ class RecentSpanExporter(SpanExporter):
 
 def configure():
     global _configured
-    if _configured:
-        return
-    provider = TracerProvider(resource=Resource.create({"service.name": "practice-assistant"}))
-    provider.add_span_processor(SimpleSpanProcessor(RecentSpanExporter()))
-    if os.getenv("OTEL_EXPORTER_OTLP_ENDPOINT"):
-        from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
+    with _configure_lock:
+        if _configured:
+            return
+        provider = TracerProvider(resource=Resource.create({"service.name": "practice-assistant"}))
+        provider.add_span_processor(SimpleSpanProcessor(RecentSpanExporter()))
+        if os.getenv("OTEL_EXPORTER_OTLP_ENDPOINT"):
+            from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
 
-        provider.add_span_processor(BatchSpanProcessor(OTLPSpanExporter()))
-    trace.set_tracer_provider(provider)
-    _configured = True
+            provider.add_span_processor(BatchSpanProcessor(OTLPSpanExporter()))
+        trace.set_tracer_provider(provider)
+        _configured = True
 
 
 def recent_spans():

@@ -216,6 +216,16 @@ def _validate_slot(conn, actor, payload, ignored_id=None):
     ):
         raise DomainError("Choose a slot within demonstration office hours, 08:00–18:00 Pacific")
     events = _calendar(conn, actor.workspace_id)
+    moving = next((event for event in events if event["id"] == ignored_id), None)
+    windows = moving["data"].get("attendee_availability") if moving else None
+    if windows is not None and not any(
+        start >= parse_time(window["start"]) and end <= parse_time(window["end"]) for window in windows
+    ):
+        raise DomainError(
+            "That time is outside the attendees' confirmed availability. Read attendee_availability on the meeting and choose a listed window.",
+            "attendee_unavailable",
+            409,
+        )
     for event in events:
         if event["id"] == ignored_id:
             continue

@@ -50,6 +50,10 @@ RECORDS = [
             "event_type": "internal",
             "owner": "Dr. Avery Morgan",
             "attendees": ["Priya Shah", "Sam Ortiz"],
+            "attendee_availability": [
+                {"start": "2026-09-09T11:00:00-07:00", "end": "2026-09-09T12:00:00-07:00"},
+                {"start": "2026-09-09T14:00:00-07:00", "end": "2026-09-09T15:00:00-07:00"},
+            ],
         },
     ),
     (

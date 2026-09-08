@@ -218,10 +218,19 @@ def test_protected_appointments_and_conflicts_are_rejected(office):
     action["payload"]["event_id"] = "visit-maya"
     with pytest.raises(DomainError, match="protected"):
         plan(store, actor, [action])
+    recording = {
+        "kind": "create_recording",
+        "payload": {
+            "title": "Record a public overview",
+            "start": "2026-09-09T10:15:00-07:00",
+            "end": "2026-09-09T10:45:00-07:00",
+        },
+    }
     with pytest.raises(DomainError, match="occupied"):
-        plan(store, actor, [meeting("2026-09-09T10:15:00-07:00", "2026-09-09T10:45:00-07:00")])
+        plan(store, actor, [recording])
+    recording["payload"].update(start="2026-09-09T08:30:00-07:00", end="2026-09-09T09:00:00-07:00")
     with pytest.raises(DomainError, match="protected"):
-        plan(store, actor, [meeting("2026-09-09T08:30:00-07:00", "2026-09-09T09:00:00-07:00")])
+        plan(store, actor, [recording])
 
 
 def test_preferences_survive_fresh_actor_and_stale_overwrite_is_rejected(office):

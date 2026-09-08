@@ -15,7 +15,9 @@ class Settings:
     fast_model: str = "google/gemini-3.5-flash-lite"
     content_model: str = "anthropic/claude-sonnet-5"
     embedding_model: str = "openai/text-embedding-3-small"
-    audio_model: str = "openai/gpt-audio-mini"
+    transcription_model: str = "openai/whisper-large-v3-turbo"
+    speech_model: str = "hexgrad/kokoro-82m"
+    speech_voice: str = "af_heart"
     environment: str = "production"
     local_auth_secret: str = ""
     supabase_service_role_key: str = ""
@@ -38,7 +40,9 @@ def settings() -> Settings:
         fast_model=os.getenv("FAST_MODEL", "google/gemini-3.5-flash-lite"),
         content_model=os.getenv("CONTENT_MODEL", "anthropic/claude-sonnet-5"),
         embedding_model=os.getenv("EMBEDDING_MODEL", "openai/text-embedding-3-small"),
-        audio_model=os.getenv("AUDIO_MODEL", "openai/gpt-audio-mini"),
+        transcription_model=os.getenv("TRANSCRIPTION_MODEL", "openai/whisper-large-v3-turbo"),
+        speech_model=os.getenv("SPEECH_MODEL", "hexgrad/kokoro-82m"),
+        speech_voice=os.getenv("SPEECH_VOICE", "af_heart"),
         environment=os.getenv("ENVIRONMENT", "production"),
         local_auth_secret=os.getenv("LOCAL_AUTH_SECRET", ""),
         supabase_service_role_key=os.getenv("SUPABASE_SERVICE_ROLE_KEY", ""),

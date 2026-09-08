@@ -1,0 +1,15 @@
+{
+  "test": "Physical executor crash after committed action",
+  "started_at": "2026-09-08T23:38:12.425622+00:00",
+  "passed": true,
+  "model_calls": 0,
+  "killed_process_exit_code": -9,
+  "committed_receipts_before_kill": 1,
+  "replacement_lease_generation": 2,
+  "task_count": 1,
+  "delivered_demo_message_count": 1,
+  "receipts_after_resume": 2,
+  "completed_plan_status": "completed",
+  "first_action_reconciled": true,
+  "elapsed_seconds": 2.304
+}

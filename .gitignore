@@ -15,3 +15,5 @@ artifacts/private/
 output/
 .playwright-cli/
 *.tsbuildinfo
+supabase/.temp/
+.supabase/

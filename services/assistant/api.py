@@ -264,7 +264,7 @@ async def transcribe(audio: UploadFile = File(), current: Actor = Depends(actor)
 
     text, usage = await run_in_threadpool(models.transcribe, data, "wav")
     jobs.record_usage(current, "transcription", usage)
-    return {"text": text, "model": settings().audio_model}
+    return {"text": text, "model": settings().transcription_model}
 
 
 @app.post("/api/voice/speak")

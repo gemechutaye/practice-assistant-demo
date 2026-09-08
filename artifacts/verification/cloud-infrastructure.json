@@ -1,0 +1,33 @@
+{
+  "checked_at": "2026-09-08T23:44:34.228126+00:00",
+  "api_url": "https://practice-assistant-api.onrender.com",
+  "api_revision": "41a0366fb8e6fa7b56d8d92208ffbffdc73449fb",
+  "database_provider": "Supabase",
+  "database_region": "us-west-2",
+  "vector_extension": "0.8.2",
+  "checks": {
+    "database_session_pooler_client_tls": true,
+    "database_session_state_across_transactions": true,
+    "anonymous_auth_signup": true,
+    "private_evidence_bucket": true,
+    "owner_only_workspace_rest_access": true,
+    "browser_office_record_access_blocked": true,
+    "owner_only_realtime_websocket_updates": true,
+    "api_health_http_200": true,
+    "api_database_readiness_http_200": true,
+    "api_anonymous_workspace_creation": true,
+    "api_snapshot_reload_persistence": true,
+    "api_missing_identity_http_401": true,
+    "api_other_session_workspace_http_403": true,
+    "disposable_verification_fixtures_cleaned": true
+  },
+  "worker": {
+    "status": "awaiting_account_payment_method",
+    "plan": "0.5c-512mb",
+    "published_monthly_usd": 7
+  },
+  "notes": [
+    "A working API and database do not establish worker completion. Full queued-agent verification is reported separately.",
+    "The Supabase project and Render API were newly created for this demonstration."
+  ]
+}

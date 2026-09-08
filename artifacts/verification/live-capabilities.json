@@ -1,0 +1,159 @@
+{
+  "started_at": "2026-09-08T23:49:52.026862+00:00",
+  "passed": true,
+  "data": "Synthetic speech and fictional office records only",
+  "cases": {
+    "speech_input": {
+      "passed": true,
+      "fixture_text": "Prepare tomorrow and check the missing paperwork.",
+      "transcript": "Prepare tomorrow and check the missing paperwork.",
+      "audio_seconds": 2.379,
+      "model": "openai/whisper-large-v3-turbo",
+      "usage": {
+        "seconds": 2.378,
+        "cost": 7.91874e-06
+      }
+    },
+    "speech_output_roundtrip": {
+      "passed": true,
+      "requested_text": "Your demonstration calendar is ready for tomorrow.",
+      "recognized_output": "Your demonstration calendar is ready for tomorrow.",
+      "playable_mp3_bytes": 24456,
+      "audio_seconds": 3.25,
+      "model": "hexgrad/kokoro-82m",
+      "voice": "af_heart",
+      "speech_usage": {
+        "request_id": "gen-tts-1788911398-HLOHhxgxDUfpPOP8H5P5",
+        "input_characters": 50
+      },
+      "transcription_usage": {
+        "seconds": 3.25,
+        "cost": 1.08225e-05
+      }
+    },
+    "retrieval": {
+      "passed": true,
+      "method": "PostgreSQL text search + pgvector similarity",
+      "embedding_model": "openai/text-embedding-3-small",
+      "preparation_source_ids": [
+        "source-paperwork-policy",
+        "source-demo-calendar",
+        "source-skin-ordering"
+      ],
+      "pricing_source_ids": [
+        "source-scar-pricing",
+        "source-practice-platform",
+        "source-paperwork-policy"
+      ],
+      "stored_vectors": 6,
+      "dimensions": 1536,
+      "pgvector_version": "0.8.6",
+      "preparation_ms": 748,
+      "pricing_ms": 248,
+      "preparation_usage": {
+        "total_tokens": 313,
+        "cost": 6.259999999999999e-06
+      },
+      "pricing_usage": {
+        "total_tokens": 10,
+        "cost": 2e-07
+      }
+    },
+    "telemetry": {
+      "passed": true,
+      "span": {
+        "name": "model.complete",
+        "trace_id": "ab5af24426e0ff84dd777eabd9044198",
+        "duration_ms": 720,
+        "attributes": {
+          "gen_ai.request.model": "google/gemini-3.5-flash-lite",
+          "gen_ai.response.model": "google/gemini-3.5-flash-lite",
+          "gen_ai.usage.total_tokens": 9
+        }
+      },
+      "actual_model": "google/gemini-3.5-flash-lite",
+      "usage": {
+        "prompt_tokens": 7,
+        "completion_tokens": 2,
+        "total_tokens": 9,
+        "cost": 7.1e-06,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 7.1e-06,
+          "upstream_inference_prompt_cost": 2.1e-06,
+          "upstream_inference_completions_cost": 5e-06
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "export": "Observed in-process OpenTelemetry span exporter; external OTLP collector not exercised"
+    }
+  },
+  "budget_limit_usd": 1.0,
+  "maximum_requests": 8,
+  "maximum_output_tokens_per_request": 400,
+  "requests": [
+    {
+      "endpoint": "audio/transcriptions",
+      "model": "openai/whisper-large-v3-turbo",
+      "elapsed_ms": 1387,
+      "tokens": null,
+      "cost_usd": 7.91874e-06
+    },
+    {
+      "endpoint": "audio/speech",
+      "model": "hexgrad/kokoro-82m",
+      "elapsed_ms": 1010,
+      "cost_usd": null,
+      "input_characters": 50,
+      "generation_id_present": true
+    },
+    {
+      "endpoint": "audio/transcriptions",
+      "model": "openai/whisper-large-v3-turbo",
+      "elapsed_ms": 888,
+      "tokens": null,
+      "cost_usd": 1.08225e-05
+    },
+    {
+      "endpoint": "embeddings",
+      "model": "text-embedding-3-small",
+      "elapsed_ms": 350,
+      "tokens": 302,
+      "cost_usd": 6.04e-06
+    },
+    {
+      "endpoint": "embeddings",
+      "model": "text-embedding-3-small",
+      "elapsed_ms": 347,
+      "tokens": 11,
+      "cost_usd": 2.2e-07
+    },
+    {
+      "endpoint": "embeddings",
+      "model": "text-embedding-3-small",
+      "elapsed_ms": 235,
+      "tokens": 10,
+      "cost_usd": 2e-07
+    },
+    {
+      "endpoint": "chat/completions",
+      "model": "google/gemini-3.5-flash-lite",
+      "elapsed_ms": 719,
+      "tokens": 9,
+      "cost_usd": 7.1e-06
+    }
+  ],
+  "known_cost_usd": 3.23e-05,
+  "cost_unavailable_requests": 1,
+  "elapsed_seconds": 9.507
+}

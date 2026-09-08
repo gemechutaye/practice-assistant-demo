@@ -6,7 +6,7 @@ The application uses a Next.js frontend on Vercel, a Python API and persistent w
 
 Create a dedicated project for the fictional demonstration. Enable anonymous sign-in under Authentication so an interviewer can start an isolated office without creating a personal account. The resulting identity owns only that office. Database rows must remain protected by RLS; the Python API applies the selected role on every request. Never point the demonstration at an existing production database.
 
-The Python API and worker need `DATABASE_URL`, `SUPABASE_URL`, `SUPABASE_ANON_KEY`, and `OPENROUTER_API_KEY`. Use a direct PostgreSQL connection or Supabase's **session** pooler; transaction pooling is unsuitable for sessions that rely on PostgreSQL checkpoint behavior. Keep the service-role key server-side if storage operations require it. Use TLS for hosted database connections.
+The Python API and worker need `DATABASE_URL`, `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, and `OPENROUTER_API_KEY`. Use a direct PostgreSQL connection or Supabase's **session** pooler on port 5432. The worker requires a persistent session for PostgreSQL checkpoints. Keep the service-role key server-side for private evidence exports. Use TLS for hosted database connections.
 
 Run migrations against the dedicated project before starting both services:
 
@@ -16,11 +16,15 @@ uv run python -m services.assistant.migrate
 
 The migrations are versioned in `supabase/migrations`. Public browser access must not grant unrestricted reads of office records. Changes to an office are served by the authenticated Python API.
 
+After migration, include `public.pa_workspaces` in the `supabase_realtime` publication. Its owner-only SELECT policy permits revision notifications for the current anonymous identity. Keep office records outside direct browser access. Verify isolation with two anonymous sessions, including a direct REST request for the other session's workspace.
+
+Create the private Storage bucket `practice-evidence` with a 10MB file limit. Allow JSON, PDF, Markdown, and plain text. Evidence objects use workspace-scoped paths and server-issued links. Do not create a public bucket or grant browser writes.
+
 ## Render
 
 The Blueprint is `infra/render.yaml`. Set this path when creating the Blueprint. Both services build `infra/Dockerfile` from the repository root and use the committed dependency lock. Start commands are `api` and `worker` through `infra/start.sh`.
 
-The configuration uses Render's free web-service plan and the smallest documented persistent worker plan, `0.5c-512mb`. The worker is billable. Confirm the current amount in the target account before provisioning. The web service may have a cold start; an always-on web plan can be selected when that cost is approved. Current plan identifiers are from the [Render Blueprint specification](https://render.com/docs/blueprint-spec).
+The configuration uses Render's free web-service plan and the smallest persistent worker plan, `0.5c-512mb`. The worker costs $7/month for 512MB RAM, according to [Render pricing](https://render.com/pricing), checked September 8, 2026. A payment method is required for the worker. The free web service may have a cold start. Current plan identifiers are from the [Render Blueprint specification](https://render.com/docs/blueprint-spec).
 
 Provide secrets through the Render environment form or its authenticated API. Never commit them to the Blueprint. The worker references the new API service's shared environment values, so both use the same dedicated database and model configuration. Automatic deployments are disabled until the first complete release is verified; release both services from the same tested revision.
 
