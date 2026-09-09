@@ -46,3 +46,7 @@ For local development only, `LOCAL_DEMO_AUTH=true` under `next dev` exposes an e
 Voice requests are recorded only after the user presses Speak. Browser recordings are converted to 16 kHz mono PCM WAV before transcription; recordings stop at sixty seconds. The transcript is placed in the composer for review before sending. Reading an answer aloud uses the backend speech endpoint.
 
 Realtime workspace revision notifications trigger an authorized snapshot fetch. Private office tables are never queried directly from the browser. Periodic refresh and run polling keep the application usable if a Realtime connection is interrupted.
+
+## Sleeping demo services
+
+Before starting an authenticated backend request, the browser checks the safe readiness endpoint. Concurrent requests share that check. Readiness GETs can retry across a service wake-up; office mutations are submitted once. A delayed start shows Starting the demo server and a failed connection exposes Retry connection. A warm readiness result is reused for twenty seconds.

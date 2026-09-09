@@ -366,6 +366,9 @@ function actionName(action: Action) {
   );
 }
 
+const serverUnavailableMessage =
+  "The demo server is still unavailable. Your saved work is safe. Please retry the connection in a moment.";
+
 export default function Workbench() {
   const [snapshot, setSnapshot] = useState<Snapshot | null>(null);
   const [view, setView] = useState<View>("Today");
@@ -394,6 +397,10 @@ export default function Workbench() {
   const [connection, setConnection] = useState("Connecting");
   const [localIdentity, setLocalIdentity] = useState(false);
   const [exportLink, setExportLink] = useState("");
+  const [serverStarting, setServerStarting] = useState(false);
+  const [serverUnavailable, setServerUnavailable] = useState(false);
+  const readyAt = useRef(0);
+  const readiness = useRef<Promise<void> | null>(null);
   const client = useRef<SupabaseClient | null>(null);
   const developmentToken = useRef("");
   const workspace = useRef("");
@@ -406,34 +413,80 @@ export default function Workbench() {
   const audioUrl = useRef("");
   const composer = useRef<HTMLTextAreaElement | null>(null);
 
-  const api = useCallback(async (path: string, init: RequestInit = {}) => {
-    const session = await client.current?.auth.getSession();
-    const token =
-      developmentToken.current || session?.data.session?.access_token;
-    if (!token)
-      throw new Error("Your session has expired. Reconnect to continue.");
-    const headers = new Headers(init.headers);
-    headers.set("Authorization", `Bearer ${token}`);
-    if (workspace.current) headers.set("X-Workspace-Id", workspace.current);
-    headers.set("X-Demo-Role", currentRole.current);
-    if (init.body && !(init.body instanceof FormData))
-      headers.set("Content-Type", "application/json");
-    const response = await fetch(`/api/backend/${path}`, {
-      ...init,
-      headers,
-      cache: "no-store",
-    });
-    if (!response.ok) {
-      const body = await response.json().catch(() => ({}));
-      throw new RequestError(
-        typeof body.detail === "string"
-          ? body.detail
-          : `The request could not be completed (${response.status}).`,
-        response.status,
-      );
-    }
-    return response;
+  const ensureReady = useCallback((force = false): Promise<void> => {
+    if (!force && Date.now() - readyAt.current < 20000)
+      return Promise.resolve();
+    if (readiness.current) return readiness.current;
+    const indicator = setTimeout(() => setServerStarting(true), 1200);
+    readiness.current = (async () => {
+      try {
+        for (let attempt = 0; attempt < 3; attempt++) {
+          try {
+            const response = await fetch("/api/backend/ready", {
+              method: "GET",
+              cache: "no-store",
+              signal: AbortSignal.timeout(60000),
+            });
+            if (response.ok && (await response.json()).status === "ready") {
+              readyAt.current = Date.now();
+              setServerUnavailable(false);
+              setError((current) =>
+                current === serverUnavailableMessage ? "" : current,
+              );
+              return;
+            }
+          } catch {
+            // Only this read-only readiness request is retried.
+          }
+          if (attempt < 2)
+            await new Promise((resolve) => setTimeout(resolve, 1500));
+        }
+        setServerUnavailable(true);
+        setConnection("Disconnected");
+        setError(serverUnavailableMessage);
+        throw new Error(serverUnavailableMessage);
+      } finally {
+        clearTimeout(indicator);
+        setServerStarting(false);
+        readiness.current = null;
+      }
+    })();
+    return readiness.current;
   }, []);
+
+  const api = useCallback(
+    async (path: string, init: RequestInit = {}) => {
+      await ensureReady();
+      const session = await client.current?.auth.getSession();
+      const token =
+        developmentToken.current || session?.data.session?.access_token;
+      if (!token)
+        throw new Error("Your session has expired. Reconnect to continue.");
+      const headers = new Headers(init.headers);
+      headers.set("Authorization", `Bearer ${token}`);
+      if (workspace.current) headers.set("X-Workspace-Id", workspace.current);
+      headers.set("X-Demo-Role", currentRole.current);
+      if (init.body && !(init.body instanceof FormData))
+        headers.set("Content-Type", "application/json");
+      const response = await fetch(`/api/backend/${path}`, {
+        ...init,
+        headers,
+        cache: "no-store",
+      });
+      if (!response.ok) {
+        if (response.status >= 500) readyAt.current = 0;
+        const body = await response.json().catch(() => ({}));
+        throw new RequestError(
+          typeof body.detail === "string"
+            ? body.detail
+            : `The request could not be completed (${response.status}).`,
+          response.status,
+        );
+      }
+      return response;
+    },
+    [ensureReady],
+  );
   const refresh = useCallback(async () => {
     const requestedRole = currentRole.current;
     const requestedWorkspace = workspace.current;
@@ -462,6 +515,7 @@ export default function Workbench() {
         throw new Error(
           "This deployment is waiting for its assistant service configuration. No demonstration records have been loaded.",
         );
+      await ensureReady();
       if (config.localAuth === true) {
         let token = sessionStorage.getItem(
           "practice-assistant-development-token",
@@ -555,7 +609,24 @@ export default function Workbench() {
     } finally {
       setLoading(false);
     }
-  }, [api]);
+  }, [api, ensureReady]);
+
+  async function retryConnection() {
+    if (!snapshot) {
+      void initialize();
+      return;
+    }
+    setBusy("reconnect");
+    setError("");
+    try {
+      await ensureReady(true);
+      await refresh();
+    } catch (error) {
+      setError(errorText(error));
+    } finally {
+      setBusy("");
+    }
+  }
 
   useEffect(() => {
     if (!initialized.current) {
@@ -1129,12 +1200,28 @@ export default function Workbench() {
             </button>
           </div>
         </header>
+        {serverStarting && snapshot && (
+          <div className="notice-banner" role="status">
+            <LoaderCircle className="spin" size={16} />
+            Starting the demo server… This can take about a minute. Your request
+            will continue when it is ready.
+          </div>
+        )}
         {error && (
           <div className="error-banner" role="alert">
             <div>
               <strong>We couldn’t finish that.</strong>
               <span>{error}</span>
             </div>
+            {serverUnavailable && snapshot && (
+              <button
+                className="secondary-button"
+                disabled={Boolean(busy) || serverStarting}
+                onClick={() => void retryConnection()}
+              >
+                <RefreshCw size={14} /> Retry connection
+              </button>
+            )}
             <button
               className="icon-button"
               aria-label="Dismiss error"
@@ -1163,21 +1250,27 @@ export default function Workbench() {
             </div>
             <span className="eyebrow">PRACTICE ASSISTANT</span>
             <h1>
-              {loading ? "Making room for your day." : "Let’s reconnect."}
+              {serverStarting
+                ? "Starting the demo server…"
+                : loading
+                  ? "Making room for your day."
+                  : "Let’s reconnect."}
             </h1>
             <p>
-              {loading
-                ? "Opening your private demonstration workspace. Its fictional records belong only to this browser’s session."
-                : "The application needs a working connection before it can show records or take action."}
+              {serverStarting
+                ? "This demonstration can take about a minute to wake up. Your private workspace will open automatically."
+                : loading
+                  ? "Opening your private demonstration workspace. Its fictional records belong only to this browser’s session."
+                  : "The application needs a working connection before it can show records or take action."}
             </p>
             {loading ? (
               <LoaderCircle className="spin" size={22} />
             ) : (
               <button
                 className="primary-button"
-                onClick={() => void initialize()}
+                onClick={() => void retryConnection()}
               >
-                <RefreshCw size={15} /> Reconnect
+                <RefreshCw size={15} /> Retry connection
               </button>
             )}
           </div>

@@ -69,7 +69,7 @@ The [MCP result](../artifacts/verification/mcp.json) used a real stdio connectio
 
 The [cloud infrastructure report](../artifacts/verification/cloud-infrastructure.json) records the checked API revision and separate Supabase/Render results: database TLS and persistent session behavior, anonymous identity, private evidence bucket, owner-only REST and Realtime access, blocked browser office-record reads, API health/readiness, workspace creation, reload persistence, missing-identity rejection and another session's workspace denial. Disposable fixtures were removed.
 
-At the time of that report, the Render worker required an account payment method. The worker billing requirement remains separate from the successful public-path workflow check below.
+At the time of that report, the Render worker required an account payment method. That earlier billing requirement was removed by the later free combined-service deployment described below.
 
 ## Public-path workflow execution
 
@@ -89,8 +89,16 @@ The report preserves run IDs, exact proposed actions, actual model/usage records
 uv run python -m scripts.verify_hosted_workflows --env-file /path/to/private/cloud.env
 ```
 
-The verifier uses fresh anonymous sessions and a known-spending stop. Its `--resume-completed-preparation` option rechecks an already-completed first case from privately saved credentials, then continues the remaining two cases without a replacement preparation inference. Keep that credential file outside version control. A complete unattended release still requires the persistent hosted worker to be provisioned and verified.
+The verifier uses fresh anonymous sessions and a known-spending stop. Its `--resume-completed-preparation` option rechecks an already-completed first case from privately saved credentials, then continues the remaining two cases without a replacement preparation inference. Keep that credential file outside version control. The earlier worker placement is preserved here as historical provenance. The final free deployment and fresh cloud-only tests are recorded below.
 
 ## Practical limits
 
 The demonstration supports administrative preparation, public drafting/review and engineering coordination with persistent, fictional office services. It does not claim real employer integration, external message delivery, clinical correctness, HIPAA certification, production load capacity, formal model privacy guarantees or comprehensive adversarial evaluation. Source reachability checks do not refresh the reviewed source notes. A production assessment would require approved connectors, real identities and operating conditions, plus a broader evaluation set drawn from the practice's authorized workflows.
+
+## Final free cloud deployment
+
+Three fresh workflows passed through the public Vercel proxy, Render API and supervised Render worker, Supabase and OpenRouter, with both temporary laptop workers stopped. The [cloud-only workflow report](../artifacts/verification/cloud-workflows.json) identifies API revision `fc692db36be80d8a361cf40c63d497b907235819`, three completed cases, and 19 passing checks. It records clinic preparation with persisted memory and linked-event handling; a sourced public draft assigned for review; and an engineering conflict that required a distinct plan and fresh approval before the valid calendar move. Known model cost for this check was $0.076842. These are functional examples, not a general accuracy benchmark.
+
+The [cloud worker evidence](../artifacts/verification/cloud-worker.json) correlates the tested run IDs with Render's actual worker logs and records observed service memory: maximum sampled 142.62 MiB of the 512 MiB limit during the check. A real Render restart then started both child processes and preserved identical plans, receipts, and answers for all three completed runs. The database-backed queue, API and model calls operate independently of the laptop. Free Render compute sleeps after 15 minutes without inbound traffic; background processing pauses while asleep and resumes when a visitor or real webhook wakes the service. There is no artificial keepalive.
+
+The [browser verification report](../artifacts/verification/browser-verification.md) distinguishes real UI/provider checks from simulated startup failures. Readiness checks retried safely; no mutations were sent before readiness, and a failed mutation was submitted exactly once. The short video reviews saved local demonstration results; the technical video shows the public source and the 118-test artifact that existed at capture time. The current regression result is 125 passing tests.

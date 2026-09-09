@@ -1,0 +1,353 @@
+{
+  "collected_at": "2026-09-09T01:10:14Z",
+  "service_id": "srv-dag9ok95efls73a1qfn0",
+  "deployment": {
+    "id": "dep-dagb1j9t0dsc73cdmhgg",
+    "status": "live",
+    "revision": "fc692db36be80d8a361cf40c63d497b907235819",
+    "created_at": "2026-09-09T01:05:18.019203Z",
+    "finished_at": "2026-09-09T01:06:18.837492Z"
+  },
+  "provider": "Render",
+  "compute_plan": "free",
+  "worker_location": "Supervised worker process in the same free Render web-service container as the API",
+  "local_workers_stopped_at": "2026-09-09T01:02:29Z",
+  "local_worker_stop_evidence": "Recorded by deployment operator before the remote verification; independent remote run claims corroborate cloud execution.",
+  "logs": [
+    {
+      "timestamp": "2026-09-09T01:05:44.422201443Z",
+      "event": "child_started",
+      "name": "api",
+      "pid": 7
+    },
+    {
+      "timestamp": "2026-09-09T01:05:44.423240162Z",
+      "event": "child_started",
+      "name": "worker",
+      "pid": 8
+    },
+    {
+      "timestamp": "2026-09-09T01:07:38.576510048Z",
+      "event": "run_claimed",
+      "run_id": "2b3e2308-6d10-4aee-afad-dfd9e4b1308c",
+      "lease_generation": 1
+    },
+    {
+      "timestamp": "2026-09-09T01:08:03.235114194Z",
+      "event": "run_claimed",
+      "run_id": "2b3e2308-6d10-4aee-afad-dfd9e4b1308c",
+      "lease_generation": 2
+    },
+    {
+      "timestamp": "2026-09-09T01:08:10.964830003Z",
+      "event": "run_claimed",
+      "run_id": "52a0f0e6-fcdc-4b73-8def-38b1359e2b67",
+      "lease_generation": 1
+    },
+    {
+      "timestamp": "2026-09-09T01:08:30.845262072Z",
+      "event": "run_claimed",
+      "run_id": "52a0f0e6-fcdc-4b73-8def-38b1359e2b67",
+      "lease_generation": 2
+    },
+    {
+      "timestamp": "2026-09-09T01:08:39.469676214Z",
+      "event": "run_claimed",
+      "run_id": "9eafc857-aa9f-44e9-b0d2-9c7922e31811",
+      "lease_generation": 1
+    },
+    {
+      "timestamp": "2026-09-09T01:09:10.243139548Z",
+      "event": "run_claimed",
+      "run_id": "9eafc857-aa9f-44e9-b0d2-9c7922e31811",
+      "lease_generation": 2
+    },
+    {
+      "timestamp": "2026-09-09T01:09:38.17890822Z",
+      "event": "run_claimed",
+      "run_id": "9eafc857-aa9f-44e9-b0d2-9c7922e31811",
+      "lease_generation": 3
+    }
+  ],
+  "log_pagination_complete": true,
+  "workflow_correlation": [
+    {
+      "name": "tomorrow_preparation",
+      "run_id": "2b3e2308-6d10-4aee-afad-dfd9e4b1308c",
+      "workflow_passed": true,
+      "remote_claim_observed": true,
+      "lease_generations_observed": [
+        1,
+        2
+      ]
+    },
+    {
+      "name": "public_content_review",
+      "run_id": "52a0f0e6-fcdc-4b73-8def-38b1359e2b67",
+      "workflow_passed": true,
+      "remote_claim_observed": true,
+      "lease_generations_observed": [
+        1,
+        2
+      ]
+    },
+    {
+      "name": "engineering_stale_approval",
+      "run_id": "9eafc857-aa9f-44e9-b0d2-9c7922e31811",
+      "workflow_passed": true,
+      "remote_claim_observed": true,
+      "lease_generations_observed": [
+        1,
+        2,
+        3
+      ]
+    }
+  ],
+  "all_three_workflows_passed_and_remotely_claimed": true,
+  "memory": {
+    "start": "2026-09-09T01:05:18Z",
+    "end": "2026-09-09T01:10:14Z",
+    "resolution_seconds": 30,
+    "samples": [
+      {
+        "instance": "srv-dag9ok95efls73a1qfn0-2lnw4",
+        "timestamp": "2026-09-09T01:05:48Z",
+        "bytes": 2326528
+      },
+      {
+        "instance": "srv-dag9ok95efls73a1qfn0-2lnw4",
+        "timestamp": "2026-09-09T01:06:18Z",
+        "bytes": 112365570
+      },
+      {
+        "instance": "srv-dag9ok95efls73a1qfn0-2lnw4",
+        "timestamp": "2026-09-09T01:06:48Z",
+        "bytes": 141766660
+      },
+      {
+        "instance": "srv-dag9ok95efls73a1qfn0-2lnw4",
+        "timestamp": "2026-09-09T01:07:18Z",
+        "bytes": 141766660
+      },
+      {
+        "instance": "srv-dag9ok95efls73a1qfn0-2lnw4",
+        "timestamp": "2026-09-09T01:07:48Z",
+        "bytes": 145612800
+      },
+      {
+        "instance": "srv-dag9ok95efls73a1qfn0-2lnw4",
+        "timestamp": "2026-09-09T01:08:18Z",
+        "bytes": 147046400
+      },
+      {
+        "instance": "srv-dag9ok95efls73a1qfn0-2lnw4",
+        "timestamp": "2026-09-09T01:08:48Z",
+        "bytes": 149409800
+      },
+      {
+        "instance": "srv-dag9ok95efls73a1qfn0-2lnw4",
+        "timestamp": "2026-09-09T01:09:18Z",
+        "bytes": 149553150
+      },
+      {
+        "instance": "srv-dag9ok95efls73a1qfn0-2lnw4",
+        "timestamp": "2026-09-09T01:09:48Z",
+        "bytes": 149553150
+      }
+    ],
+    "limit_samples": [
+      {
+        "instance": "srv-dag9ok95efls73a1qfn0-2lnw4",
+        "timestamp": "2026-09-09T01:06:18Z",
+        "bytes": 536870900
+      },
+      {
+        "instance": "srv-dag9ok95efls73a1qfn0-2lnw4",
+        "timestamp": "2026-09-09T01:06:48Z",
+        "bytes": 536870900
+      },
+      {
+        "instance": "srv-dag9ok95efls73a1qfn0-2lnw4",
+        "timestamp": "2026-09-09T01:07:18Z",
+        "bytes": 536870900
+      },
+      {
+        "instance": "srv-dag9ok95efls73a1qfn0-2lnw4",
+        "timestamp": "2026-09-09T01:07:48Z",
+        "bytes": 536870900
+      },
+      {
+        "instance": "srv-dag9ok95efls73a1qfn0-2lnw4",
+        "timestamp": "2026-09-09T01:08:18Z",
+        "bytes": 536870900
+      },
+      {
+        "instance": "srv-dag9ok95efls73a1qfn0-2lnw4",
+        "timestamp": "2026-09-09T01:08:48Z",
+        "bytes": 536870900
+      },
+      {
+        "instance": "srv-dag9ok95efls73a1qfn0-2lnw4",
+        "timestamp": "2026-09-09T01:09:18Z",
+        "bytes": 536870900
+      },
+      {
+        "instance": "srv-dag9ok95efls73a1qfn0-2lnw4",
+        "timestamp": "2026-09-09T01:09:48Z",
+        "bytes": 536870900
+      }
+    ],
+    "maximum_observed_bytes": 149553150,
+    "maximum_observed_mib": 142.62,
+    "observed_limit_bytes": 536870900,
+    "all_observed_samples_below_limit": true,
+    "scope": "Largest value returned at 30-second metric resolution during this recorded deployment/test window; not lifetime peak, an instantaneous maximum, or a load-capacity guarantee."
+  },
+  "service_limitations": "Free service sleeps after 15 minutes without inbound traffic. Queued state is durable in Supabase; processing resumes on a real request. No artificial keepalive or continuously awake worker is claimed.",
+  "sources": [
+    "https://api-docs.render.com/reference/list-logs",
+    "https://api-docs.render.com/reference/get-memory",
+    "https://render.com/docs/free"
+  ],
+  "restart": {
+    "requested_at": "2026-09-09T01:11:36Z",
+    "endpoint": "POST /v1/services/{serviceId}/restart",
+    "documentation": "https://api-docs.render.com/reference/restart-service",
+    "before": [
+      {
+        "name": "tomorrow_preparation",
+        "run_id": "2b3e2308-6d10-4aee-afad-dfd9e4b1308c",
+        "status": "completed",
+        "plan_id": "c1e7b182-ac0b-4a1b-a7c5-e6eb1e5ded6a",
+        "action_count": 3,
+        "actions_sha256": "7c72cb0fbb0049eba09663a722756786cba1ac91340b5fb37cc3822cd82e95fe",
+        "answer_sha256": "8de203c72cd42b0a1f028af30dadd57269d3e5f6b5fdc6802daee96359892aae",
+        "action_ids": [
+          "86e42899-c469-433e-844e-4340f7f9dfef",
+          "dd14b4b3-a989-4d47-a413-64e249f62064",
+          "671c3a08-6f15-4329-a11c-43f5f538c207"
+        ],
+        "all_action_statuses_completed": true
+      },
+      {
+        "name": "public_content_review",
+        "run_id": "52a0f0e6-fcdc-4b73-8def-38b1359e2b67",
+        "status": "completed",
+        "plan_id": "0dd9f8ed-27ed-4469-93ae-7003c10c16c2",
+        "action_count": 1,
+        "actions_sha256": "28653a4eff79ee3b10a0fdebc239a00c356ef3216dbab0e4d6ee4fcffa6539f4",
+        "answer_sha256": "dffb03f0eaeb6bc4d1774045482c39ed2f1c9344dd573b66f96acee19f27451b",
+        "action_ids": [
+          "134b54d3-fb85-41e5-88a0-9f6caa76571a"
+        ],
+        "all_action_statuses_completed": true
+      },
+      {
+        "name": "engineering_stale_approval",
+        "run_id": "9eafc857-aa9f-44e9-b0d2-9c7922e31811",
+        "status": "completed",
+        "plan_id": "21d5c966-5995-4dc7-a04e-169d1d2e0530",
+        "action_count": 2,
+        "actions_sha256": "f93372afb8239e132c414d81ed18e7101d4ec627f15f85e37d15e2a7b2f6df8f",
+        "answer_sha256": "7d233d396d842913c3dc75574c8b8b4775517f8af538540be5f58c083b33ae12",
+        "action_ids": [
+          "69d7abcf-c20d-452b-8a00-00bc09773d9e",
+          "6d293445-0dd6-425b-86b5-538d981907bb"
+        ],
+        "all_action_statuses_completed": true
+      }
+    ],
+    "restart_requests_issued": 1,
+    "passed": true,
+    "http_status": 200,
+    "checked_at": "2026-09-09T01:14:00Z",
+    "after": [
+      {
+        "name": "tomorrow_preparation",
+        "run_id": "2b3e2308-6d10-4aee-afad-dfd9e4b1308c",
+        "status": "completed",
+        "plan_id": "c1e7b182-ac0b-4a1b-a7c5-e6eb1e5ded6a",
+        "action_count": 3,
+        "actions_sha256": "7c72cb0fbb0049eba09663a722756786cba1ac91340b5fb37cc3822cd82e95fe",
+        "answer_sha256": "8de203c72cd42b0a1f028af30dadd57269d3e5f6b5fdc6802daee96359892aae",
+        "checks": {
+          "run_still_completed": true,
+          "same_plan": true,
+          "same_action_ids": true,
+          "same_receipts_and_action_payloads": true,
+          "same_answer": true,
+          "all_action_statuses_completed": true
+        },
+        "passed": true
+      },
+      {
+        "name": "public_content_review",
+        "run_id": "52a0f0e6-fcdc-4b73-8def-38b1359e2b67",
+        "status": "completed",
+        "plan_id": "0dd9f8ed-27ed-4469-93ae-7003c10c16c2",
+        "action_count": 1,
+        "actions_sha256": "28653a4eff79ee3b10a0fdebc239a00c356ef3216dbab0e4d6ee4fcffa6539f4",
+        "answer_sha256": "dffb03f0eaeb6bc4d1774045482c39ed2f1c9344dd573b66f96acee19f27451b",
+        "checks": {
+          "run_still_completed": true,
+          "same_plan": true,
+          "same_action_ids": true,
+          "same_receipts_and_action_payloads": true,
+          "same_answer": true,
+          "all_action_statuses_completed": true
+        },
+        "passed": true
+      },
+      {
+        "name": "engineering_stale_approval",
+        "run_id": "9eafc857-aa9f-44e9-b0d2-9c7922e31811",
+        "status": "completed",
+        "plan_id": "21d5c966-5995-4dc7-a04e-169d1d2e0530",
+        "action_count": 2,
+        "actions_sha256": "f93372afb8239e132c414d81ed18e7101d4ec627f15f85e37d15e2a7b2f6df8f",
+        "answer_sha256": "7d233d396d842913c3dc75574c8b8b4775517f8af538540be5f58c083b33ae12",
+        "checks": {
+          "run_still_completed": true,
+          "same_plan": true,
+          "same_action_ids": true,
+          "same_receipts_and_action_payloads": true,
+          "same_answer": true,
+          "all_action_statuses_completed": true
+        },
+        "passed": true
+      }
+    ],
+    "new_child_startup_logs": [
+      {
+        "timestamp": "2026-09-09T01:11:43.728839105Z",
+        "event": "child_started",
+        "name": "api",
+        "pid": 7
+      },
+      {
+        "timestamp": "2026-09-09T01:11:43.729394108Z",
+        "event": "child_started",
+        "name": "worker",
+        "pid": 8
+      }
+    ],
+    "readiness": {
+      "health": {
+        "http_status": 200,
+        "response": {
+          "status": "ok",
+          "version": "0.1.0",
+          "revision": "fc692db36be80d8a361cf40c63d497b907235819"
+        }
+      },
+      "ready": {
+        "http_status": 200,
+        "response": {
+          "status": "ready",
+          "vector_extension": "0.8.2"
+        }
+      }
+    },
+    "instance_listing": "The free-service instance API returned null; new process startup is established by post-restart Render application logs."
+  }
+}

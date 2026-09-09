@@ -8,6 +8,8 @@ The assistant selects tools through live hosted models, proposes exact changes, 
 
 Read the [six-page engineering case study](docs/case-study.pdf) for the design, measured evidence, and boundaries. The free demo starts on demand; allow about a minute when the server has been idle. It preserves records and jobs in Supabase, and pauses unattended work while the service sleeps. Model calls use funded OpenRouter credit.
 
+The [release guide](docs/RELEASE.md) records what works, what was tested and the connection boundaries. The [walkthrough guide](docs/WALKTHROUGHS.md) gives timestamps and explains what each recording demonstrates.
+
 ## Try these workflows
 
 - **Prepare tomorrow:** inspect protected clinic appointments, calculate the paperwork deadline, reuse existing tasks, and prepare useful follow-up.

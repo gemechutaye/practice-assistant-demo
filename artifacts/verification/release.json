@@ -1,0 +1,22 @@
+{
+  "recorded_at": "2026-09-09T01:18:15.761019+00:00",
+  "app_url": "https://practice-assistant-demo.vercel.app",
+  "frontend_deployment_id": "dpl_7a19kPgyUatgfWSwSgB6SUW1QrTV",
+  "frontend_deployment_url": "https://practice-assistant-demo-dk77eisah-gemechutayes-projects.vercel.app",
+  "frontend_change_since_last_browser_check": "Only the case-study PDF was updated; application code unchanged. Final public PDF size and video playback verified in browser-verification.md.",
+  "backend_revision": "fc692db36be80d8a361cf40c63d497b907235819",
+  "backend_ci_url": "https://github.com/gemechutaye/practice-assistant-demo/actions/runs/34297727603",
+  "regression_tests_passed": 125,
+  "cloud_workflow_cases_passed": 3,
+  "cloud_workflow_checks_passed": 19,
+  "cloud_restart_passed": true,
+  "local_worker_required": false,
+  "free_compute_limit": "On-demand service; unattended processing pauses during idle sleep.",
+  "verification_reports": [
+    "pytest-summary.json",
+    "browser-verification.md",
+    "cloud-workflows.json",
+    "cloud-worker.json",
+    "cloud-infrastructure.json"
+  ]
+}

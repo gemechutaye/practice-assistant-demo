@@ -1,0 +1,645 @@
+{
+  "started_at": "2026-09-09T01:07:29.142459+00:00",
+  "origin": "https://practice-assistant-demo.vercel.app",
+  "worker_location": "Supervised worker process in the free Render web service; both temporary laptop workers stopped before verification",
+  "scope": "Three functional examples through public Vercel proxy, Render API and Supabase; not a general accuracy benchmark. Worker placement is declared by the operator and checked separately in deployment evidence.",
+  "maximum_workflows": 3,
+  "known_cost_stop_usd": 0.75,
+  "budget_target_usd": 0.5,
+  "passed": true,
+  "cases": [
+    {
+      "name": "tomorrow_preparation",
+      "role": "doctor",
+      "workspace_id": "54e2bd97-a2cc-4e52-b174-728fd5821955",
+      "run_id": "2b3e2308-6d10-4aee-afad-dfd9e4b1308c",
+      "prompt": "Prepare tomorrow: inspect the schedule, missing paperwork deadline and existing tasks. Move the conflicting internal engineering meeting to an available confirmed team window. Prepare a demo inbox message to Alex about the paperwork follow-up, reusing the existing task. Remember that I prefer a concise administrative summary.",
+      "passed": true,
+      "started_at": "2026-09-09T01:07:32.867195+00:00",
+      "plans": [
+        {
+          "id": "c1e7b182-ac0b-4a1b-a7c5-e6eb1e5ded6a",
+          "status_when_observed": "pending",
+          "actions": [
+            {
+              "id": "86e42899-c469-433e-844e-4340f7f9dfef",
+              "kind": "move_meeting",
+              "payload": {
+                "end": "2026-09-09T11:30:00-07:00",
+                "start": "2026-09-09T11:00:00-07:00",
+                "event_id": "engineering-sync"
+              }
+            },
+            {
+              "id": "dd14b4b3-a989-4d47-a413-64e249f62064",
+              "kind": "deliver_demo_message",
+              "payload": {
+                "body": "Please follow up on Maya\u2019s missing paperwork now and update the existing task \u201cConfirm Maya\u2019s paperwork is received\u201d (task-prep-maya). The administrative deadline is today at 09:00 Pacific.",
+                "sender": "Dr. Avery Morgan",
+                "status": "delivered_to_demo_inbox",
+                "subject": "Maya paperwork follow-up",
+                "recipient": "Alex Kim",
+                "record_id": "action-dd14b4b3-a989-4d47-a413-64e249f62064",
+                "access_scope": "office",
+                "related_record_id": "admin-maya"
+              }
+            },
+            {
+              "id": "671c3a08-6f15-4329-a11c-43f5f538c207",
+              "kind": "save_preference",
+              "payload": {
+                "key": "administrative_summary_style",
+                "scope": "doctor",
+                "value": "Prefer concise administrative summaries."
+              }
+            }
+          ]
+        }
+      ],
+      "usage": {
+        "tokens": 20294,
+        "cost": 0.0194328,
+        "latency_ms": 19185
+      },
+      "status": "completed",
+      "answer": "Completed the approved changes:\n- CRM engineering decisions\n- Maya paperwork follow-up\n- administrative_summary_style\nThe stored results have been read back and are available in the office views.",
+      "model_calls": [
+        {
+          "kind": "routing",
+          "model": "google/gemini-3.5-flash-lite",
+          "tokens": 113,
+          "cost": "0.0000581",
+          "duration_ms": 776
+        },
+        {
+          "kind": "model",
+          "model": "openai/gpt-5.6-terra",
+          "tokens": 1391,
+          "cost": "0.003913",
+          "duration_ms": 2300
+        },
+        {
+          "kind": "model",
+          "model": "openai/gpt-5.6-terra",
+          "tokens": 1993,
+          "cost": "0.0020464",
+          "duration_ms": 1434
+        },
+        {
+          "kind": "model",
+          "model": "openai/gpt-5.6-terra",
+          "tokens": 2790,
+          "cost": "0.0026043",
+          "duration_ms": 1068
+        },
+        {
+          "kind": "model",
+          "model": "openai/gpt-5.6-terra",
+          "tokens": 2993,
+          "cost": "0.0012928",
+          "duration_ms": 3291
+        },
+        {
+          "kind": "model",
+          "model": "openai/gpt-5.6-terra",
+          "tokens": 3172,
+          "cost": "0.0012757",
+          "duration_ms": 4394
+        },
+        {
+          "kind": "model",
+          "model": "openai/gpt-5.6-terra",
+          "tokens": 3582,
+          "cost": "0.0018415",
+          "duration_ms": 1708
+        },
+        {
+          "kind": "model",
+          "model": "openai/gpt-5.6-terra",
+          "tokens": 4260,
+          "cost": "0.006401",
+          "duration_ms": 4214
+        }
+      ],
+      "receipts": [
+        {
+          "action_id": "86e42899-c469-433e-844e-4340f7f9dfef",
+          "kind": "move_meeting",
+          "status": "completed",
+          "result": {
+            "record": {
+              "id": "engineering-sync",
+              "end": "2026-09-09T11:30:00-07:00",
+              "kind": "event",
+              "owner": "Dr. Avery Morgan",
+              "start": "2026-09-09T11:00:00-07:00",
+              "title": "CRM engineering decisions",
+              "version": 2,
+              "attendees": [
+                "Priya Shah",
+                "Sam Ortiz"
+              ],
+              "event_type": "internal",
+              "external_id": "engineering-sync",
+              "source_system": "practice-demo",
+              "source_version": "1",
+              "attendee_availability": [
+                {
+                  "end": "2026-09-09T12:00:00-07:00",
+                  "start": "2026-09-09T11:00:00-07:00"
+                },
+                {
+                  "end": "2026-09-09T15:00:00-07:00",
+                  "start": "2026-09-09T14:00:00-07:00"
+                }
+              ]
+            },
+            "operation_id": "86e42899-c469-433e-844e-4340f7f9dfef",
+            "verification": "Read back the saved calendar record"
+          }
+        },
+        {
+          "action_id": "dd14b4b3-a989-4d47-a413-64e249f62064",
+          "kind": "deliver_demo_message",
+          "status": "completed",
+          "result": {
+            "record": {
+              "id": "action-dd14b4b3-a989-4d47-a413-64e249f62064",
+              "body": "Please follow up on Maya\u2019s missing paperwork now and update the existing task \u201cConfirm Maya\u2019s paperwork is received\u201d (task-prep-maya). The administrative deadline is today at 09:00 Pacific.",
+              "kind": "message",
+              "sender": "Dr. Avery Morgan",
+              "status": "delivered_to_demo_inbox",
+              "subject": "Maya paperwork follow-up",
+              "version": 1,
+              "recipient": "Alex Kim",
+              "external_id": "dd14b4b3-a989-4d47-a413-64e249f62064",
+              "access_scope": "office",
+              "source_system": "practice-demo",
+              "source_version": "1",
+              "related_record_id": "admin-maya"
+            },
+            "delivery": "Delivered to demo inbox. No external message was sent.",
+            "operation_id": "dd14b4b3-a989-4d47-a413-64e249f62064",
+            "verification": "Read back the saved message record"
+          }
+        },
+        {
+          "action_id": "671c3a08-6f15-4329-a11c-43f5f538c207",
+          "kind": "save_preference",
+          "status": "completed",
+          "result": {
+            "preference": {
+              "id": "preference-671c3a08-6f15-4329-a11c-43f5f538c207",
+              "key": "administrative_summary_style",
+              "scope": "doctor",
+              "value": "Prefer concise administrative summaries.",
+              "version": 1
+            },
+            "operation_id": "671c3a08-6f15-4329-a11c-43f5f538c207",
+            "verification": "Read back the confirmed preference"
+          }
+        }
+      ],
+      "memory_readback": {
+        "preferences": [
+          {
+            "id": "preference-671c3a08-6f15-4329-a11c-43f5f538c207",
+            "key": "administrative_summary_style",
+            "value": "Prefer concise administrative summaries.",
+            "version": 1,
+            "scope": "doctor",
+            "source_request": "Confirmed in approved plan c1e7b182-ac0b-4a1b-a7c5-e6eb1e5ded6a",
+            "updated_at": "2026-09-09T01:08:03.883248+00:00"
+          },
+          {
+            "id": "pref-content-style",
+            "key": "content_style",
+            "value": "Use calm, clear language. Explain uncertainty. Do not promise outcomes or invent individual prices.",
+            "version": 1,
+            "scope": "content",
+            "source_request": "Confirmed demonstration preference",
+            "updated_at": "2026-09-09T01:07:31.943858+00:00"
+          },
+          {
+            "id": "pref-team-updates",
+            "key": "engineering_updates",
+            "value": "Use a concise asynchronous update unless a decision needs a meeting.",
+            "version": 1,
+            "scope": "doctor",
+            "source_request": "Confirmed demonstration preference",
+            "updated_at": "2026-09-09T01:07:31.943858+00:00"
+          },
+          {
+            "id": "pref-protect-morning",
+            "key": "morning_preparation",
+            "value": "Keep the 30 minutes before the first patient appointment free of internal meetings and recording.",
+            "version": 1,
+            "scope": "doctor",
+            "source_request": "Confirmed demonstration preference",
+            "updated_at": "2026-09-09T01:07:31.943858+00:00"
+          }
+        ]
+      },
+      "handoff_event_id": "2939e773-1e0c-414d-a7d2-d9b4a98a7401",
+      "checks": {
+        "deadline_is_45_minutes": true,
+        "patient_appointments_unchanged": true,
+        "existing_preparation_task_reused": true,
+        "approved_message_saved": true,
+        "preference_saved_and_retrieved": true,
+        "real_outbox_closed_linked_task": true,
+        "unrelated_task_still_open": true
+      }
+    },
+    {
+      "name": "public_content_review",
+      "role": "editor",
+      "workspace_id": "8226f181-271f-47dd-b5c0-369a7735d09f",
+      "run_id": "52a0f0e6-fcdc-4b73-8def-38b1359e2b67",
+      "prompt": "Create a new short public video script and caption explaining why scar-revision pricing starts with an individual consultation. Retrieve the public source, cite it, and save the new draft in review assigned to Jamie Park. Keep individual prices and treatment recommendations out.",
+      "passed": true,
+      "started_at": "2026-09-09T01:08:10.725558+00:00",
+      "plans": [
+        {
+          "id": "0dd9f8ed-27ed-4469-93ae-7003c10c16c2",
+          "status_when_observed": "pending",
+          "actions": [
+            {
+              "id": "134b54d3-fb85-41e5-88a0-9f6caa76571a",
+              "kind": "create_content",
+              "payload": {
+                "title": "Why Scar-Revision Pricing Starts With a Consultation",
+                "script": "Thinking about scar revision and wondering why pricing starts with a consultation?\n\nScar concerns can differ in characteristics such as size, location, and complexity. Because those details vary from person to person, a single flat price may not reflect what is involved.\n\nA consultation is the time to discuss the individual concern and receive information specific to that visit, including pricing.\n\nWhen you are researching, consider public information a starting point for questions\u2014not an individual quote or recommendation.\n\nThis video is for general informational purposes only and is not medical advice or a treatment recommendation.",
+                "status": "in_review",
+                "caption": "Why does scar-revision pricing start with a consultation? Individual concerns can vary, so the consultation is where visit-specific information\u2014including pricing\u2014is discussed. This is general information, not an individual quote or treatment recommendation.",
+                "reviewer": "Jamie Park",
+                "record_id": "action-134b54d3-fb85-41e5-88a0-9f6caa76571a",
+                "source_ids": [
+                  "source-scar-pricing"
+                ],
+                "review_task": {
+                  "owner": "Jamie Park",
+                  "title": "Review: Why Scar-Revision Pricing Starts With a Consultation",
+                  "due_at": "2026-09-09T16:00:00-07:00",
+                  "follow_up_permission": "Close this linked review task when its content is marked reviewed."
+                },
+                "access_scope": "content"
+              }
+            }
+          ]
+        }
+      ],
+      "usage": {
+        "tokens": 7295,
+        "cost": 0.01716332,
+        "latency_ms": 16707
+      },
+      "status": "completed",
+      "answer": "Completed the approved changes:\n- Why Scar-Revision Pricing Starts With a Consultation\nThe stored results have been read back and are available in the office views.",
+      "model_calls": [
+        {
+          "kind": "routing",
+          "model": "google/gemini-3.5-flash-lite",
+          "tokens": 107,
+          "cost": "0.0000563",
+          "duration_ms": 724
+        },
+        {
+          "kind": "model",
+          "model": "openai/gpt-5.6-terra",
+          "tokens": 1267,
+          "cost": "0.003584",
+          "duration_ms": 2346
+        },
+        {
+          "kind": "retrieval",
+          "model": "openai/text-embedding-3-small",
+          "tokens": 246,
+          "cost": "0.00000492",
+          "duration_ms": 810
+        },
+        {
+          "kind": "model",
+          "model": "openai/gpt-5.6-terra",
+          "tokens": 2021,
+          "cost": "0.0025775",
+          "duration_ms": 1644
+        },
+        {
+          "kind": "model",
+          "model": "anthropic/claude-sonnet-5",
+          "tokens": 941,
+          "cost": "0.006146",
+          "duration_ms": 7641
+        },
+        {
+          "kind": "model",
+          "model": "openai/gpt-5.6-terra",
+          "tokens": 2713,
+          "cost": "0.0047946",
+          "duration_ms": 3514
+        }
+      ],
+      "receipts": [
+        {
+          "action_id": "134b54d3-fb85-41e5-88a0-9f6caa76571a",
+          "kind": "create_content",
+          "status": "completed",
+          "result": {
+            "record": {
+              "id": "action-134b54d3-fb85-41e5-88a0-9f6caa76571a",
+              "kind": "content",
+              "title": "Why Scar-Revision Pricing Starts With a Consultation",
+              "script": "Thinking about scar revision and wondering why pricing starts with a consultation?\n\nScar concerns can differ in characteristics such as size, location, and complexity. Because those details vary from person to person, a single flat price may not reflect what is involved.\n\nA consultation is the time to discuss the individual concern and receive information specific to that visit, including pricing.\n\nWhen you are researching, consider public information a starting point for questions\u2014not an individual quote or recommendation.\n\nThis video is for general informational purposes only and is not medical advice or a treatment recommendation.",
+              "status": "in_review",
+              "caption": "Why does scar-revision pricing start with a consultation? Individual concerns can vary, so the consultation is where visit-specific information\u2014including pricing\u2014is discussed. This is general information, not an individual quote or treatment recommendation.",
+              "version": 1,
+              "reviewer": "Jamie Park",
+              "source_ids": [
+                "source-scar-pricing"
+              ],
+              "external_id": "134b54d3-fb85-41e5-88a0-9f6caa76571a",
+              "access_scope": "content",
+              "source_system": "practice-demo",
+              "source_version": "1"
+            },
+            "review_task": {
+              "id": "action-134b54d3-fb85-41e5-88a0-9f6caa76571a-review",
+              "kind": "task",
+              "owner": "Jamie Park",
+              "title": "Review: Why Scar-Revision Pricing Starts With a Consultation",
+              "due_at": "2026-09-09T16:00:00-07:00",
+              "status": "open",
+              "version": 1,
+              "workflow": "content_review",
+              "access_scope": "content",
+              "source_system": "practice-demo",
+              "related_record_id": "action-134b54d3-fb85-41e5-88a0-9f6caa76571a",
+              "follow_up_permission": "Close this linked review task when its content is marked reviewed."
+            },
+            "operation_id": "134b54d3-fb85-41e5-88a0-9f6caa76571a",
+            "verification": "Read back the saved content record"
+          }
+        }
+      ],
+      "checks": {
+        "new_draft_saved": true,
+        "cites_public_pricing_source": true,
+        "draft_in_review": true,
+        "review_task_assigned": true,
+        "actual_claude_route_observed": true,
+        "editor_has_no_patient_data": true
+      }
+    },
+    {
+      "name": "engineering_stale_approval",
+      "role": "doctor",
+      "workspace_id": "751b6012-b1e1-43e0-8c88-2a50de895f14",
+      "run_id": "9eafc857-aa9f-44e9-b0d2-9c7922e31811",
+      "prompt": "Read the current engineering updates, messages and schedule. Move the CRM engineering decisions meeting out of clinic to a confirmed available team window tomorrow, and prepare a concise demo message to Sam about the decisions that need the doctor. Preserve patient appointments.",
+      "passed": true,
+      "started_at": "2026-09-09T01:08:35.401578+00:00",
+      "plans": [
+        {
+          "id": "1f0c7034-951a-44f2-ae43-c17f6d695f26",
+          "status_when_observed": "pending",
+          "actions": [
+            {
+              "id": "b3cd74af-ae43-4bdb-8fac-5684a68380e8",
+              "kind": "move_meeting",
+              "payload": {
+                "end": "2026-09-09T14:30:00-07:00",
+                "start": "2026-09-09T14:00:00-07:00",
+                "event_id": "engineering-sync"
+              }
+            },
+            {
+              "id": "e26291b1-2ff6-4924-8eb4-5ba6e8e11676",
+              "kind": "deliver_demo_message",
+              "payload": {
+                "body": "For Dr. Morgan\u2019s review: (1) decide whether an intake record requires a phone number or email before saving; and (2) confirm whether Alex Kim should be the initial owner for incomplete-paperwork follow-up. The CRM decisions meeting is proposed for tomorrow at 14:00 Pacific.",
+                "sender": "Dr. Avery Morgan",
+                "status": "delivered_to_demo_inbox",
+                "subject": "Doctor decisions for tomorrow\u2019s CRM meeting",
+                "recipient": "Sam Ortiz",
+                "record_id": "action-e26291b1-2ff6-4924-8eb4-5ba6e8e11676",
+                "access_scope": "office",
+                "related_record_id": "engineering-import"
+              }
+            }
+          ]
+        },
+        {
+          "id": "21d5c966-5995-4dc7-a04e-169d1d2e0530",
+          "status_when_observed": "pending",
+          "actions": [
+            {
+              "id": "69d7abcf-c20d-452b-8a00-00bc09773d9e",
+              "kind": "move_meeting",
+              "payload": {
+                "end": "2026-09-09T11:30:00-07:00",
+                "start": "2026-09-09T11:00:00-07:00",
+                "event_id": "engineering-sync"
+              }
+            },
+            {
+              "id": "6d293445-0dd6-425b-86b5-538d981907bb",
+              "kind": "deliver_demo_message",
+              "payload": {
+                "body": "For Dr. Morgan\u2019s review: (1) decide whether an intake record requires a phone number or email before saving; and (2) confirm whether Alex Kim should be the initial owner for incomplete-paperwork follow-up. The CRM decisions meeting is proposed for tomorrow at 11:00 Pacific.",
+                "sender": "Dr. Avery Morgan",
+                "status": "delivered_to_demo_inbox",
+                "subject": "Doctor decisions for tomorrow\u2019s CRM meeting",
+                "recipient": "Sam Ortiz",
+                "record_id": "action-6d293445-0dd6-425b-86b5-538d981907bb",
+                "access_scope": "office",
+                "related_record_id": "engineering-import"
+              }
+            }
+          ]
+        }
+      ],
+      "usage": {
+        "tokens": 40989,
+        "cost": 0.0402456,
+        "latency_ms": 45254
+      },
+      "status": "completed",
+      "answer": "Completed the approved changes:\n- CRM engineering decisions\n- Doctor decisions for tomorrow\u2019s CRM meeting\nThe stored results have been read back and are available in the office views.",
+      "model_calls": [
+        {
+          "kind": "routing",
+          "model": "google/gemini-3.5-flash-lite",
+          "tokens": 105,
+          "cost": "0.0000557",
+          "duration_ms": 629
+        },
+        {
+          "kind": "model",
+          "model": "openai/gpt-5.6-terra",
+          "tokens": 1391,
+          "cost": "0.0010381",
+          "duration_ms": 3285
+        },
+        {
+          "kind": "model",
+          "model": "openai/gpt-5.6-terra",
+          "tokens": 1641,
+          "cost": "0.0012038",
+          "duration_ms": 1233
+        },
+        {
+          "kind": "model",
+          "model": "openai/gpt-5.6-terra",
+          "tokens": 1843,
+          "cost": "0.001051",
+          "duration_ms": 1173
+        },
+        {
+          "kind": "model",
+          "model": "openai/gpt-5.6-terra",
+          "tokens": 2050,
+          "cost": "0.0011514",
+          "duration_ms": 5589
+        },
+        {
+          "kind": "model",
+          "model": "openai/gpt-5.6-terra",
+          "tokens": 2991,
+          "cost": "0.0059748",
+          "duration_ms": 12437
+        },
+        {
+          "kind": "model",
+          "model": "openai/gpt-5.6-terra",
+          "tokens": 3544,
+          "cost": "0.0031677",
+          "duration_ms": 9162
+        },
+        {
+          "kind": "model",
+          "model": "openai/gpt-5.6-terra",
+          "tokens": 3804,
+          "cost": "0.0016364",
+          "duration_ms": 1026
+        },
+        {
+          "kind": "model",
+          "model": "openai/gpt-5.6-terra",
+          "tokens": 4007,
+          "cost": "0.0014956",
+          "duration_ms": 1373
+        },
+        {
+          "kind": "model",
+          "model": "openai/gpt-5.6-terra",
+          "tokens": 4066,
+          "cost": "0.0012165",
+          "duration_ms": 1618
+        },
+        {
+          "kind": "model",
+          "model": "openai/gpt-5.6-terra",
+          "tokens": 4810,
+          "cost": "0.012204",
+          "duration_ms": 1391
+        },
+        {
+          "kind": "model",
+          "model": "openai/gpt-5.6-terra",
+          "tokens": 5066,
+          "cost": "0.0044165",
+          "duration_ms": 2777
+        },
+        {
+          "kind": "model",
+          "model": "openai/gpt-5.6-terra",
+          "tokens": 5671,
+          "cost": "0.0056341",
+          "duration_ms": 3561
+        }
+      ],
+      "receipts": [
+        {
+          "action_id": "69d7abcf-c20d-452b-8a00-00bc09773d9e",
+          "kind": "move_meeting",
+          "status": "completed",
+          "result": {
+            "record": {
+              "id": "engineering-sync",
+              "end": "2026-09-09T11:30:00-07:00",
+              "kind": "event",
+              "owner": "Dr. Avery Morgan",
+              "start": "2026-09-09T11:00:00-07:00",
+              "title": "CRM engineering decisions",
+              "version": 2,
+              "attendees": [
+                "Priya Shah",
+                "Sam Ortiz"
+              ],
+              "event_type": "internal",
+              "external_id": "engineering-sync",
+              "source_system": "practice-demo",
+              "source_version": "1",
+              "attendee_availability": [
+                {
+                  "end": "2026-09-09T12:00:00-07:00",
+                  "start": "2026-09-09T11:00:00-07:00"
+                },
+                {
+                  "end": "2026-09-09T15:00:00-07:00",
+                  "start": "2026-09-09T14:00:00-07:00"
+                }
+              ]
+            },
+            "operation_id": "69d7abcf-c20d-452b-8a00-00bc09773d9e",
+            "verification": "Read back the saved calendar record"
+          }
+        },
+        {
+          "action_id": "6d293445-0dd6-425b-86b5-538d981907bb",
+          "kind": "deliver_demo_message",
+          "status": "completed",
+          "result": {
+            "record": {
+              "id": "action-6d293445-0dd6-425b-86b5-538d981907bb",
+              "body": "For Dr. Morgan\u2019s review: (1) decide whether an intake record requires a phone number or email before saving; and (2) confirm whether Alex Kim should be the initial owner for incomplete-paperwork follow-up. The CRM decisions meeting is proposed for tomorrow at 11:00 Pacific.",
+              "kind": "message",
+              "sender": "Dr. Avery Morgan",
+              "status": "delivered_to_demo_inbox",
+              "subject": "Doctor decisions for tomorrow\u2019s CRM meeting",
+              "version": 1,
+              "recipient": "Sam Ortiz",
+              "external_id": "6d293445-0dd6-425b-86b5-538d981907bb",
+              "access_scope": "office",
+              "source_system": "practice-demo",
+              "source_version": "1",
+              "related_record_id": "engineering-import"
+            },
+            "delivery": "Delivered to demo inbox. No external message was sent.",
+            "operation_id": "6d293445-0dd6-425b-86b5-538d981907bb",
+            "verification": "Read back the saved message record"
+          }
+        }
+      ],
+      "checks": {
+        "fresh_plan_required": true,
+        "stale_approval_did_not_move_meeting": true,
+        "replacement_uses_different_slot": true,
+        "within_confirmed_attendee_window": true,
+        "approved_move_read_back": true,
+        "patient_appointments_unchanged": true
+      }
+    }
+  ],
+  "api_health": {
+    "status": "ok",
+    "version": "0.1.0",
+    "revision": "fc692db36be80d8a361cf40c63d497b907235819"
+  },
+  "known_cost_usd": 0.076842,
+  "last_invocation_elapsed_seconds": 131.101,
+  "completed_at": "2026-09-09T01:09:40.243692+00:00",
+  "elapsed_seconds": 131.101,
+  "workspaces_preserved_for_evidence": true
+}

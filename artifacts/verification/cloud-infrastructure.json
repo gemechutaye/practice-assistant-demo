@@ -22,9 +22,13 @@
     "disposable_verification_fixtures_cleaned": true
   },
   "worker": {
-    "status": "awaiting_account_payment_method",
-    "plan": "0.5c-512mb",
-    "published_monthly_usd": 7
+    "status": "cloud_workflows_verified",
+    "plan": "free",
+    "placement": "API and worker supervised inside one Render web service",
+    "proof": "cloud-worker.json",
+    "workflows": "cloud-workflows.json",
+    "local_workers_stopped_before_verification": true,
+    "idle_behavior": "Pauses with the service after 15 idle minutes; resumes on real inbound activity."
   },
   "notes": [
     "A working API and database do not establish worker completion. Full queued-agent verification is reported separately.",
@@ -37,5 +41,11 @@
     "ready_http_status": 200,
     "vector_extension": "0.8.2",
     "scope": "Health and database readiness only; original Auth, REST, Realtime and API flow checks retain their earlier verification provenance."
-  }
+  },
+  "initial_worker_status": {
+    "status": "awaiting_account_payment_method",
+    "plan": "0.5c-512mb",
+    "published_monthly_usd": 7
+  },
+  "release_runtime_revision": "fc692db36be80d8a361cf40c63d497b907235819"
 }
