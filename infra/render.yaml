@@ -1,6 +1,6 @@
-# Apply only to dedicated Practice Assistant services. The persistent worker is
-# a paid service; inspect the account's current price before provisioning it.
-# The frontend is deployed separately to Vercel, and the database is Supabase.
+# Default free demonstration: supervised API and worker processes in one web service.
+# Both processes sleep when Render spins down the free instance; state stays in Supabase.
+# Optional separately billed worker layout: infra/render-separate-worker.yaml.
 services:
   - type: web
     name: practice-assistant-api
@@ -9,7 +9,7 @@ services:
     plan: free
     dockerfilePath: ./infra/Dockerfile
     dockerContext: .
-    dockerCommand: /app/infra/start.sh api
+    dockerCommand: /app/infra/start.sh demo
     healthCheckPath: /api/health
     autoDeployTrigger: "off"
     envVars:
@@ -23,45 +23,6 @@ services:
         sync: false
       - key: OPENROUTER_API_KEY
         sync: false
-      - key: ENVIRONMENT
-        value: production
-      - key: PYTHONUNBUFFERED
-        value: "1"
-  - type: worker
-    name: practice-assistant-worker
-    runtime: docker
-    region: oregon
-    plan: 0.5c-512mb
-    dockerfilePath: ./infra/Dockerfile
-    dockerContext: .
-    dockerCommand: /app/infra/start.sh worker
-    autoDeployTrigger: "off"
-    envVars:
-      - key: DATABASE_URL
-        fromService:
-          type: web
-          name: practice-assistant-api
-          envVarKey: DATABASE_URL
-      - key: SUPABASE_URL
-        fromService:
-          type: web
-          name: practice-assistant-api
-          envVarKey: SUPABASE_URL
-      - key: SUPABASE_ANON_KEY
-        fromService:
-          type: web
-          name: practice-assistant-api
-          envVarKey: SUPABASE_ANON_KEY
-      - key: SUPABASE_SERVICE_ROLE_KEY
-        fromService:
-          type: web
-          name: practice-assistant-api
-          envVarKey: SUPABASE_SERVICE_ROLE_KEY
-      - key: OPENROUTER_API_KEY
-        fromService:
-          type: web
-          name: practice-assistant-api
-          envVarKey: OPENROUTER_API_KEY
       - key: ENVIRONMENT
         value: production
       - key: PYTHONUNBUFFERED

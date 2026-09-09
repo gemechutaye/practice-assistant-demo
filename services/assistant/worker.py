@@ -61,6 +61,7 @@ def process_one(store, jobs, models, cfg):
     job = jobs.claim(cfg.worker_lease_seconds)
     if not job:
         return process_outbox(store)
+    log.info("run_claimed run_id=%s lease_generation=%s", job["run_id"], job["lease_generation"])
     done = threading.Event()
 
     def heartbeat():
@@ -109,7 +110,26 @@ def process_one(store, jobs, models, cfg):
     finally:
         done.set()
         thread.join(timeout=1)
+        log.info("run_finished run_id=%s lease_generation=%s", job["run_id"], job["lease_generation"])
     return True
+
+
+def run_loop(stopped, step, once=False):
+    """Back off empty/error polls without delaying a worker that has real work."""
+    delay = 1
+    while not stopped.is_set():
+        try:
+            worked = step()
+        except Exception as error:
+            log.error("worker_poll_failed error_type=%s", type(error).__name__)
+            worked = False
+        if once:
+            return
+        if worked:
+            delay = 1
+        else:
+            stopped.wait(delay)
+            delay = min(15, delay * 2)
 
 
 def main():
@@ -124,16 +144,10 @@ def main():
     stopped = threading.Event()
     signal.signal(signal.SIGTERM, lambda *_: stopped.set())
     signal.signal(signal.SIGINT, lambda *_: stopped.set())
-    while not stopped.is_set():
-        try:
-            worked = process_one(store, jobs, models, cfg)
-        except Exception as error:
-            log.error("worker_poll_failed error_type=%s", type(error).__name__)
-            worked = False
-        if args.once:
-            break
-        if not worked:
-            stopped.wait(1)
+    try:
+        run_loop(stopped, lambda: process_one(store, jobs, models, cfg), args.once)
+    finally:
+        models.client.close()
 
 
 if __name__ == "__main__":

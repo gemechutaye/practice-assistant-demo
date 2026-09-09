@@ -1,6 +1,6 @@
 # Deployment
 
-The application uses a Next.js frontend on Vercel, a Python API and persistent worker on Render, and a dedicated Supabase project. These instructions describe the release configuration. A configuration file alone does not establish a live deployment; deployed URLs and verification results belong in the release report.
+The default demonstration uses a Next.js frontend on Vercel, separate Python API and worker processes supervised inside one free Render web service, and a dedicated Supabase project. These instructions describe the release configuration. A configuration file alone does not establish a live deployment; deployed URLs and verification results belong in the release report.
 
 ## Supabase
 
@@ -8,7 +8,7 @@ Create a dedicated project for the fictional demonstration. Enable anonymous sig
 
 The Python API and worker need `DATABASE_URL`, `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, and `OPENROUTER_API_KEY`. Use a direct PostgreSQL connection or Supabase's **session** pooler on port 5432. The worker requires a persistent session for PostgreSQL checkpoints. Keep the service-role key server-side for private evidence exports. Use TLS for hosted database connections.
 
-Run migrations against the dedicated project before starting both services:
+Run migrations against the dedicated project before starting the application processes:
 
 ```sh
 uv run python -m services.assistant.migrate
@@ -20,15 +20,35 @@ After migration, include `public.pa_workspaces` in the `supabase_realtime` publi
 
 Create the private Storage bucket `practice-evidence` with a 10MB file limit. Allow JSON, PDF, Markdown, and plain text. Evidence objects use workspace-scoped paths and server-issued links. Do not create a public bucket or grant browser writes.
 
-## Render
+## Render: default free demonstration
 
-The Blueprint is `infra/render.yaml`. Set this path when creating the Blueprint. Both services build `infra/Dockerfile` from the repository root and use the committed dependency lock. Start commands are `api` and `worker` through `infra/start.sh`.
+Use `infra/render.yaml`. It declares one free web service, builds `infra/Dockerfile` from the repository root with the committed dependency lock, and starts `/app/infra/start.sh demo`. This command supervises separate API and worker processes inside the same container. The API binds to `0.0.0.0:$PORT`; the worker has no public port.
 
-The configuration uses Render's free web-service plan and the smallest persistent worker plan, `0.5c-512mb`. The worker costs $7/month for 512MB RAM, according to [Render pricing](https://render.com/pricing), checked September 8, 2026. A payment method is required for the worker. The free web service may have a cold start. Current plan identifiers are from the [Render Blueprint specification](https://render.com/docs/blueprint-spec).
+Both children share the dedicated database and model configuration. If either process exits, the supervisor stops the other and exits so the platform can restart the service. Shutdown signals are forwarded to both processes. The worker polls with a bounded idle backoff, so a newly queued request can take up to 15 seconds to start while the service is awake.
 
-Provide secrets through the Render environment form or its authenticated API. Never commit them to the Blueprint. The worker references the new API service's shared environment values, so both use the same dedicated database and model configuration. Automatic deployments are disabled until the first complete release is verified; release both services from the same tested revision.
+The free instance is suitable for this interactive demonstration. Render spins it down after 15 minutes without inbound traffic and wakes it on the next request; the documented wake-up is about one minute. **The worker also stops while the instance sleeps.** The interface waits and retries during wake-up. Supabase retains the jobs, checkpoints, records and receipts, so unfinished work can resume after the instance returns. There is no keepalive loop or promise of unattended, always-on processing. See [Render's free service limits](https://render.com/docs/free).
 
-The API binds to `0.0.0.0:$PORT` and exposes `/api/health`. The worker does not expose a public port. Before releasing the browser app, verify the API health response, anonymous identity validation, workspace creation, and one queued run completed by the worker.
+Provide `DATABASE_URL`, `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` and `OPENROUTER_API_KEY` through Render's environment settings or its authenticated API. Do not commit them. The API and worker use the same configured model routes and limits. Automatic deployments remain disabled; deploy a tested source revision deliberately.
+
+The free container has 512MB of memory. Models run through hosted APIs; the image does not install a local inference engine or download model weights. Verify actual service memory during complete workflows before calling the release healthy. Import-only measurements on a development machine do not establish cloud peak memory.
+
+Before releasing the browser app, verify `/api/health`, `/api/ready`, anonymous identity validation, workspace creation, one queued run completed by the container's worker, and recovery after a process restart. Check the Render logs to establish that both supervised processes are running. A responding API alone does not establish worker health.
+
+### Optional separate persistent worker
+
+`infra/render-separate-worker.yaml` is an explicitly optional layout. It starts the API with `/app/infra/start.sh api` and creates a separately billed worker using `/app/infra/start.sh worker`. Do not apply this file for the default free demonstration.
+
+The smallest persistent worker plan, `0.5c-512mb`, costs $7/month for 512MB RAM according to [Render pricing](https://render.com/pricing), checked September 8, 2026. It requires a payment method. This layout supports worker activity while the free API is idle; an always-on API would require its own appropriate compute plan. Use the same tested revision and private environment configuration for both services. Current plan identifiers are documented in the [Render Blueprint specification](https://render.com/docs/blueprint-spec).
+
+### Updating an existing service
+
+The documented service PATCH accepts the start-command change below. A separate deployment request is required for the change to take effect. See [Render service updates](https://api-docs.render.com/reference/update-service).
+
+```json
+{"serviceDetails":{"envSpecificDetails":{"dockerCommand":"/app/infra/start.sh demo"}}}
+```
+
+Use `GET /v1/metrics/memory` with the service ID in `resource`, ISO timestamps in `startTime` and `endTime`, and `resolutionSeconds` of at least 30. Read the unit returned with each time series. `GET /v1/metrics/memory-limit` exposes the corresponding limit. Metrics may lag a fresh deployment. See [Render memory metrics](https://api-docs.render.com/reference/get-memory).
 
 ## Vercel
 

@@ -4,7 +4,7 @@ The evidence below was collected on September 8, 2026. Deterministic tests, actu
 
 ## Automated regression suite
 
-The final full suite passed all 118 tests, with no failures, errors or skips. The test suite exercises real PostgreSQL reads, transactions, ownership, approval, versions, receipts, job recovery and event handling. Model/provider HTTP responses are mocked in deterministic adapter tests; the separate live checks exercise actual hosted models. The machine-readable [JUnit report](../artifacts/verification/pytest.xml) is the authoritative count and result for the latest run.
+The final full suite passed all 125 tests, with no failures, errors or skips. The test suite exercises real PostgreSQL reads, transactions, ownership, approval, versions, receipts, job recovery and event handling. Model/provider HTTP responses are mocked in deterministic adapter tests; the separate live checks exercise actual hosted models. The machine-readable [JUnit report](../artifacts/verification/pytest.xml) is the authoritative count and result for the latest run.
 
 Coverage includes:
 
@@ -13,6 +13,7 @@ Coverage includes:
 - Workspace and role isolation for tools, plans, run evidence, direct IDs and the public content route; private source IDs and arbitrary specialist briefs are refused.
 - Source checking restricted to allowed URLs; private evidence storage and exact signed-path validation, including rejection of absolute or unrelated URLs.
 - Queue recovery, lease generation changes, cancellation and exhaustion; old workers cannot commit after ownership changes.
+- Real supervisor child processes verify sibling failure, signal propagation, forced shutdown and reaping; idle polling backs off without retrying private error payloads.
 - Target-specific event handling, duplicate payload detection, repeated completion, review/task relationships and event lease fences across reset.
 - Dedicated hosted audio request shape, explicit preset voice, raw MP3 handling, provider rejection, bounded transient retries and invalid transcript/audio responses.
 
@@ -56,7 +57,7 @@ uv run python -m scripts.verify_live_capabilities --env-file /path/to/private/mo
 
 The audio fixture is synthesized with macOS `say`; conversion uses FFmpeg or `afconvert`. The script never opens a microphone. It creates and removes a fictional workspace, uses the actual configured model key, and writes sanitized evidence. External OTLP collector delivery was not exercised; the successful span was observed through the in-process exporter.
 
-A separate [HTTP audio check](../artifacts/verification/http-audio.json) exercised the running local FastAPI service and the Next.js proxy with an authenticated disposable workspace. Both returned HTTP 200 and `audio/mpeg`: 24,456 bytes from the API and 24,288 bytes through the proxy. FFprobe decoded both responses as 3.25-second audio. This verifies the binary HTTP path; browser playback is a separate UI check.
+A separate [HTTP audio check](../artifacts/verification/http-audio.json) exercised the running local FastAPI service and the Next.js proxy with an authenticated disposable workspace. Both returned HTTP 200 and `audio/mpeg`: 24,456 bytes from the API and 24,288 bytes through the proxy. FFprobe decoded both responses as 3.25-second audio. This verifies the binary HTTP path. A separate real-browser check loaded a 77,352-byte MP3, reached readyState 4, and observed playback advancing to 1.22 seconds within an 11.6655-second response.
 
 ## Routing and MCP
 
@@ -68,7 +69,27 @@ The [MCP result](../artifacts/verification/mcp.json) used a real stdio connectio
 
 The [cloud infrastructure report](../artifacts/verification/cloud-infrastructure.json) records the checked API revision and separate Supabase/Render results: database TLS and persistent session behavior, anonymous identity, private evidence bucket, owner-only REST and Realtime access, blocked browser office-record reads, API health/readiness, workspace creation, reload persistence, missing-identity rejection and another session's workspace denial. Disposable fixtures were removed.
 
-At the time of that report, the Render worker required an account payment method. That infrastructure report explicitly does not establish queued-agent completion. The final release report must name the deployed revision and verify the live worker's main flows before describing the hosted application as complete. Local verification remains valid independently of hosting status.
+At the time of that report, the Render worker required an account payment method. The worker billing requirement remains separate from the successful public-path workflow check below.
+
+## Public-path workflow execution
+
+The [hosted workflow report](../artifacts/verification/hosted-workflows.json) passed three real model-driven examples through `https://practice-assistant-demo.vercel.app/api/backend`, the Render API at revision `e02a8e5e657804d47043ff5e5a89dd068bee4c0b`, and hosted Supabase. **A temporary local worker processed the hosted queue; the paid Render worker was still awaiting billing setup.** These results establish the working public HTTP/database/model path, not an independently running cloud worker deployment.
+
+| Case | Verified behavior |
+|---|---|
+| Preparation for tomorrow | Calculated the 45-minute paperwork deadline, reused the existing preparation task, preserved patient appointments, saved an approved internal meeting move and demonstration message, and saved/retrieved a concise-summary preference. A real queued handoff completed only the linked preparation task; an unrelated task stayed open. |
+| Public content and review | An editor request used the actual Claude route, cited the public consultation-pricing source, saved a new draft in review, and assigned Jamie Park its linked review task. The editor snapshot contained no patient administration or engineering records. |
+| Engineering coordination | The verifier occupied a proposed slot before approving its original plan. The original approval caused no meeting move. The worker prepared a distinct replacement, obtained a separate exact approval, and saved a different slot within confirmed attendee availability while preserving patient appointments. |
+
+The total recorded cost was $0.076869, including a $0.01725 unapproved preliminary probe excluded from the three passing cases. That probe was interrupted because the verifier confused plan status (`pending`) with run status (`awaiting_approval`). A remaining verifier task-status assertion was corrected from `done` to the actual `completed` value, then the already-completed preparation case was rechecked through its saved identity without repeating its inference. These were verification harness corrections; the application required no runtime change for these checks.
+
+The report preserves run IDs, exact proposed actions, actual model/usage records, committed action readbacks and per-case invariants. Anonymous identities are kept only in a private local file for recovery; no credentials enter the report. The three fictional workspaces remain available for evidence inspection. Three successful requests demonstrate these concrete flows and do not establish general model accuracy, throughput or continuous hosted availability.
+
+```sh
+uv run python -m scripts.verify_hosted_workflows --env-file /path/to/private/cloud.env
+```
+
+The verifier uses fresh anonymous sessions and a known-spending stop. Its `--resume-completed-preparation` option rechecks an already-completed first case from privately saved credentials, then continues the remaining two cases without a replacement preparation inference. Keep that credential file outside version control. A complete unattended release still requires the persistent hosted worker to be provisioned and verified.
 
 ## Practical limits
 

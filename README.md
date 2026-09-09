@@ -4,7 +4,9 @@ A working, independent demonstration built by Gemechu Taye for a physician-facin
 
 The assistant selects tools through live hosted models, proposes exact changes, waits for approval, then verifies stored results. If the office changes, it rereads the records and asks for approval of a new plan. If a response is interrupted after a write, it resumes from durable receipts without duplicating the effect.
 
-Read the [six-page engineering case study](docs/case-study.pdf) for the design, measured evidence, and boundaries.
+[Open the live demo](https://practice-assistant-demo.vercel.app) · [Watch the product walkthrough](https://practice-assistant-demo.vercel.app/materials/practice-assistant-demo.mp4) · [Watch the code walkthrough](https://practice-assistant-demo.vercel.app/materials/technical-walkthrough.mp4)
+
+Read the [six-page engineering case study](docs/case-study.pdf) for the design, measured evidence, and boundaries. The free demo starts on demand; allow about a minute when the server has been idle. It preserves records and jobs in Supabase, and pauses unattended work while the service sleeps. Model calls use funded OpenRouter credit.
 
 ## Try these workflows
 
@@ -17,7 +19,7 @@ The Demo controls can complete paperwork, occupy a proposed time, interrupt a wr
 ## Architecture
 
 - Next.js 15, React 19, and TypeScript frontend on Vercel.
-- Python 3.12, FastAPI, and a separate durable worker on Render.
+- Python 3.12, FastAPI, and a durable worker as supervised processes in one free Render web service.
 - Supabase anonymous identity, PostgreSQL, pgvector, Realtime, and private evidence storage.
 - OpenRouter: Google for routing, OpenAI for planning and embeddings, Anthropic for public content, and hosted audio input/output.
 - LangGraph with PostgreSQL checkpoints; database leases and fencing coordinate worker ownership.

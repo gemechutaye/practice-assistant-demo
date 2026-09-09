@@ -39,7 +39,7 @@ The executor checks the approved payload, role, expiry, record versions and curr
 | MCP stdio adapter | External tool access through the same authenticated HTTP API |
 | OpenTelemetry | Actual model spans; bounded local span history and optional OTLP export |
 
-The release configuration places the web interface on Vercel and the API and persistent worker on Render. Deployment verification is reported separately; a healthy API alone does not prove a working worker. The implementation has no AWS dependency.
+The release configuration places the web interface on Vercel and runs the API and worker as two supervised processes in one free Render web service. If either process exits, the supervisor stops the other and exits so the service can restart. Render may put the service to sleep after 15 idle minutes; queued work and checkpoints remain in Supabase, and processing resumes when a visitor or real webhook wakes it. There is no artificial keepalive. This supports an on-demand demonstration; continuous unattended processing requires always-on compute. Deployment verification is reported separately; a healthy API alone does not prove a working worker. The implementation has no AWS dependency.
 
 ## Ownership and information boundaries
 

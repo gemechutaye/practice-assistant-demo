@@ -1,0 +1,41 @@
+{
+  "started_at": "2026-09-08T23:59:56.523877+00:00",
+  "origin": "https://practice-assistant-demo.vercel.app",
+  "worker_location": "temporary local process against hosted queue; Render worker billing pending",
+  "scope": "Three functional examples through public Vercel proxy, Render API and Supabase; not a general accuracy benchmark or a fully hosted worker deployment.",
+  "maximum_workflows": 3,
+  "known_cost_stop_usd": 0.75,
+  "budget_target_usd": 0.5,
+  "passed": false,
+  "cases": [
+    {
+      "name": "tomorrow_preparation",
+      "role": "doctor",
+      "workspace_id": "fddcd193-b57c-443e-be20-aafb7798303a",
+      "run_id": "6f2bbb84-b477-4caf-a41b-3c2e7fa2efa4",
+      "prompt": "Prepare tomorrow: inspect the schedule, missing paperwork deadline and existing tasks. Move the conflicting internal engineering meeting to an available confirmed team window. Prepare a demo inbox message to Alex about the paperwork follow-up, reusing the existing task. Remember that I prefer a concise administrative summary.",
+      "passed": false,
+      "started_at": "2026-09-08T23:59:58.256946+00:00",
+      "plans": [],
+      "usage": {
+        "tokens": 15770,
+        "cost": 0.0172495,
+        "latency_ms": 18843
+      },
+      "status": "awaiting_approval"
+    }
+  ],
+  "api_health": {
+    "status": "ok",
+    "version": "0.1.0",
+    "revision": "e02a8e5e657804d47043ff5e5a89dd068bee4c0b"
+  },
+  "known_cost_usd": 0.01725,
+  "elapsed_seconds": 117.041,
+  "workspaces_preserved_for_evidence": true,
+  "failure": {
+    "type": "VerificationHarnessMismatch",
+    "note": "Plan pending was incorrectly compared to run awaiting_approval; interrupted before any approval. Excluded from passing cases."
+  },
+  "interrupted_before_approval": true
+}
