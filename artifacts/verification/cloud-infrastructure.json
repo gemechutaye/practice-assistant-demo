@@ -1,7 +1,7 @@
 {
   "checked_at": "2026-09-08T23:44:34.228126+00:00",
   "api_url": "https://practice-assistant-api.onrender.com",
-  "api_revision": "41a0366fb8e6fa7b56d8d92208ffbffdc73449fb",
+  "api_revision": "e02a8e5e657804d47043ff5e5a89dd068bee4c0b",
   "database_provider": "Supabase",
   "database_region": "us-west-2",
   "vector_extension": "0.8.2",
@@ -29,5 +29,13 @@
   "notes": [
     "A working API and database do not establish worker completion. Full queued-agent verification is reported separately.",
     "The Supabase project and Render API were newly created for this demonstration."
-  ]
+  ],
+  "initial_api_verification_revision": "41a0366fb8e6fa7b56d8d92208ffbffdc73449fb",
+  "release_readiness_rechecked_at": "2026-09-08T23:56:37.953197+00:00",
+  "release_readiness_recheck": {
+    "health_http_status": 200,
+    "ready_http_status": 200,
+    "vector_extension": "0.8.2",
+    "scope": "Health and database readiness only; original Auth, REST, Realtime and API flow checks retain their earlier verification provenance."
+  }
 }

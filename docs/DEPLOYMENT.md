@@ -57,3 +57,10 @@ Run the frontend separately from `apps/web` with its API origin set to `http://1
 ## Release evidence
 
 Record the deployed source revision and URLs, then verify three working user flows, reload persistence, role denial, stale approval rejection, and timeout-after-write recovery. Include actual model and tool traces. A reachable home page without a connected model, database, and worker is not a completed release.
+
+
+## Existing server or Coolify
+
+The API and worker are ordinary Docker processes. A server already owned by the operator can run only the worker while retaining the Vercel frontend, Render API, and Supabase data. Build the repository with `infra/Dockerfile`, use the private production environment values, and run `/app/infra/start.sh worker` with the container restart policy enabled. No public port or domain is needed for this outbound worker. Apply database migrations once before starting a new release.
+
+Coolify can manage that container on an operator-supplied Linux server. Its self-hosted software is free, but server capacity is separate. Coolify Cloud starts at $5/month and also requires operator-supplied servers; it does not include free compute. See [Coolify pricing](https://coolify.io/pricing) and [installation requirements](https://coolify.io/docs/get-started/installation). No Coolify deployment is claimed in this release.

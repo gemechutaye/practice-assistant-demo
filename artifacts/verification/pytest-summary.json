@@ -1,0 +1,19 @@
+{
+  "tests": 118,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "elapsed_seconds": 3.423,
+  "passed": true,
+  "scope": "Real local PostgreSQL regression suite; external HTTP mocked for deterministic adapter cases. Live model checks reported separately.",
+  "test_modules": [
+    "tests.test_api",
+    "tests.test_attendee_availability",
+    "tests.test_audio",
+    "tests.test_content_boundary",
+    "tests.test_domain",
+    "tests.test_evidence",
+    "tests.test_jobs",
+    "tests.test_public_content"
+  ]
+}

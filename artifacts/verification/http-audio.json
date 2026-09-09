@@ -1,0 +1,20 @@
+[
+  {
+    "path": "direct_api",
+    "status": 200,
+    "content_type": "audio/mpeg",
+    "content_length": "24456",
+    "bytes": 24456,
+    "decodes": true,
+    "audio_seconds": 3.25
+  },
+  {
+    "path": "next_proxy",
+    "status": 200,
+    "content_type": "audio/mpeg",
+    "content_length": null,
+    "bytes": 24288,
+    "decodes": true,
+    "audio_seconds": 3.25
+  }
+]

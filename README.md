@@ -4,6 +4,8 @@ A working, independent demonstration built by Gemechu Taye for a physician-facin
 
 The assistant selects tools through live hosted models, proposes exact changes, waits for approval, then verifies stored results. If the office changes, it rereads the records and asks for approval of a new plan. If a response is interrupted after a write, it resumes from durable receipts without duplicating the effect.
 
+Read the [six-page engineering case study](docs/case-study.pdf) for the design, measured evidence, and boundaries.
+
 ## Try these workflows
 
 - **Prepare tomorrow:** inspect protected clinic appointments, calculate the paperwork deadline, reuse existing tasks, and prepare useful follow-up.
@@ -26,25 +28,31 @@ Every visitor owns a separate fictional workspace. Role switching is a demonstra
 
 ## Run locally
 
-Install Python 3.12, uv, Node.js 20+, and Docker. Keep secrets in an environment file outside the repository.
+Install Python 3.12, uv, Node.js 20+, and Docker. Keep the model key in an ignored local environment file.
 
 ```sh
 cp .env.example .env
-# Fill DATABASE_URL and OPENROUTER_API_KEY; use local auth only for local development.
+```
+
+For local development, set `DATABASE_URL=postgresql://practice:practice-local-only@127.0.0.1:55432/practice_assistant`, supply your `OPENROUTER_API_KEY`, and set `ENVIRONMENT=local`. Add a random `LOCAL_AUTH_SECRET` (for example, generate one with `python3 -c "import secrets; print(secrets.token_urlsafe(32))"`). Supabase values can be blank when using local identity; private exports then report storage unavailable until configured.
+
+```sh
+export ENV_FILE="$PWD/.env"
 docker compose up -d database
 uv sync --frozen
 uv run python -m services.assistant.migrate
 uv run uvicorn services.assistant.api:app --port 8100
-# Separate terminal:
+# Separate terminal, with the same ENV_FILE:
 uv run python -m services.assistant.worker
 # Separate terminal:
 cd apps/web
 npm ci
 cp .env.example .env.local
+# Add LOCAL_DEMO_AUTH=true to .env.local, then:
 npm run dev
 ```
 
-Set `ENV_FILE` to the chosen environment file for Python commands. To use the bundled Compose database, its default connection is documented in `compose.yaml`. Hosted configuration requires Supabase Auth; local authentication is disabled in production by the backend and frontend.
+The Compose database uses a disposable local password and binds only to localhost. Hosted configuration requires Supabase Auth; local authentication is disabled in production by both the backend and frontend. The reference deployment instructions use separate API and worker processes.
 
 See [deployment](docs/DEPLOYMENT.md), [architecture](docs/ARCHITECTURE.md), [verification](docs/VERIFICATION.md), and the [HTTP contract](docs/CONTRACT.md). Actual test evidence is in `artifacts/verification/`.
 

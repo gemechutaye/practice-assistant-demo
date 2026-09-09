@@ -272,6 +272,21 @@ function renderValue(value: unknown): string {
         : String(value);
 }
 function actionValue(key: string, value: unknown, snapshot: Snapshot): string {
+  if (key === "review_task" && value && typeof value === "object") {
+    const task = value as Record<string, unknown>;
+    return [
+      task.title ? String(task.title) : "Review this content",
+      task.owner ? `Assigned to ${String(task.owner)}` : null,
+      task.due_at
+        ? `Due ${when(task.due_at, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })}`
+        : null,
+      task.follow_up_permission
+        ? "Close this review task when the content is marked reviewed."
+        : null,
+    ]
+      .filter(Boolean)
+      .join("\n");
+  }
   if (["start", "end", "due_at"].includes(key))
     return when(value, {
       month: "short",
@@ -938,9 +953,14 @@ export default function Workbench() {
     try {
       const response = await api("voice/speak", {
         method: "POST",
-        body: JSON.stringify({ text: run.answer.slice(0, 6000) }),
+        body: JSON.stringify({ text: run.answer.slice(0, 2200) }),
       });
-      const url = URL.createObjectURL(await response.blob());
+      const audio = await response.blob();
+      if (!audio.size)
+        throw new Error(
+          "The speech service returned no audio. Your written response is still available; please try again.",
+        );
+      const url = URL.createObjectURL(audio);
       if (audioUrl.current) URL.revokeObjectURL(audioUrl.current);
       audioUrl.current = url;
       const player = new Audio(url);
@@ -2292,7 +2312,11 @@ export default function Workbench() {
                           ) : (
                             <Volume2 size={13} />
                           )}
-                          {speaking ? "Stop reading" : "Read aloud"}
+                          {speaking
+                            ? "Stop reading"
+                            : (run.answer?.length || 0) > 2200
+                              ? "Read first part aloud"
+                              : "Read aloud"}
                         </button>
                       </div>
                     )}
